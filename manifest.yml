@@ -1,0 +1,9 @@
+---
+applications:
+- name: mpv-staging
+  buildpack: ruby_buildpack
+  command: bundle exec rake db:migrate && bundle exec rails s -p $PORT
+  env:
+    RAILS_ENV: staging
+  services:
+     - mpv-db-staging

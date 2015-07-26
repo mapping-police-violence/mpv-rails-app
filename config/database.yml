@@ -74,12 +74,8 @@ test:
 #   DATABASE_URL="postgres://myuser:mypass@localhost/somedatabase"
 #
 # You can use this database configuration with:
-#
-#   production:
-#     url: <%= ENV['DATABASE_URL'] %>
-#
+staging:
+  url:  <%= ENV['DATABASE_URL'] %>
+
 production:
-  <<: *default
-  database: mapping_police_violence_production
-  username: mapping_police_violence
-  password: <%= ENV['MAPPING_POLICE_VIOLENCE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
