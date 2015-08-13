@@ -3,11 +3,11 @@ require 'csv'
 class CsvImporter
   def self.import filename
     CSV.foreach filename do |row|
-      next if row[0] == "Victim's name"
+      next if row[0] == "Id"
 
       Incident.create!({
-                          :victim_name => row[0],
-                          :victim_age => row[1],
+                          :victim_name => row[1],
+                          :victim_age => row[2],
                           :victim_gender => row[3],
                           :victim_race => row[4],
                           :victim_image_url => row[5],
@@ -34,9 +34,30 @@ class CsvImporter
                           :note => row[26],
                           :in_custody => row[27],
                           :arrest_related_death => row[28],
-                          :unique_mpv => row[31],
+                          :unique_mpv => row[29],
+                          :latitude => row[32],
+                          :longitude => row[33]
                       })
 
+    end
+  end
+
+  def self.scrape_lat_long_from_json
+    file = File.read('db/seeds/mpv-data-out.json')
+    json = JSON.parse(file)
+    puts json.length
+    json.each do | incident |
+      lat = incident["lat"]
+      long = incident["lng"]
+      name = incident["name"]
+      puts name
+
+      incident = Incident.find_by(:victim_name => name)
+      if incident
+        incident.latitude = lat
+        incident.longitude = long
+        incident.save!
+      end
     end
   end
 end

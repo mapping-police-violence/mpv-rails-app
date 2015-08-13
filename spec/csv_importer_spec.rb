@@ -33,6 +33,8 @@ describe 'CsvImporter' do
       expect(first_incident.unarmed).to eq "Allegedly Armed"
       expect(first_incident.line_of_duty).to eq "Line of Duty"
       expect(first_incident.unique_mpv).to eq 457
+      expect(first_incident.latitude).to eq BigDecimal.new(30.8137, 10)
+      expect(first_incident.longitude).to eq BigDecimal.new(-88.3332, 10)
     end
   end
 end
