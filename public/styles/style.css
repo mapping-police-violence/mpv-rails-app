@@ -1,0 +1,38 @@
+a {
+	color: white;
+}
+
+a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+body {
+	background-color: black;
+	color: white;
+}
+
+.banner {
+	background-color: red;
+	display: inline-block;
+	height: 360px;
+	width: 100%;
+}
+
+.banner-text {
+	font-size: 34px;
+	font-weight: bold;
+	padding: 150px 0 150px 0;
+	text-align: center;
+}
+
+.navbar-header {
+	width: 100%;
+}
+
+.navbar-links {
+	float: right;
+}
+
+.navbar-text {
+}
