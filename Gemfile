@@ -16,6 +16,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 gem 'actionpack-page_caching'
 
+gem 'foreman'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -27,6 +29,8 @@ gem 'responders', '~> 2.0'
 
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
+
+gem 'passenger'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc

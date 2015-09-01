@@ -2,9 +2,8 @@
 applications:
 - name: mpv-staging
   buildpack: ruby_buildpack
-  command: bundle exec rake db:migrate && bundle exec rails s -p $PORT
+  command: bundle exec foreman start
   env:
     RAILS_ENV: staging
-    RAILS_SERVE_STATIC_FILES: true
   services:
      - mpv-db-staging
