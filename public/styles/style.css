@@ -26,6 +26,10 @@ body {
 	text-align: center;
 }
 
+.large-map {
+	display: block;
+	margin: 0 auto;
+}
 .navbar-header {
 	width: 100%;
 }
@@ -35,4 +39,3 @@ body {
 }
 
 .navbar-text {
-}
