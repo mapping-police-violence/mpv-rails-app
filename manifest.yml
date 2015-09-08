@@ -8,3 +8,4 @@ applications:
     RAILS_SERVE_STATIC_FILES: true
   services:
      - mpv-db-staging
+     - mpv-redis-staging
