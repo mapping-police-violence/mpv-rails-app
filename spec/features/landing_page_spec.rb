@@ -30,8 +30,8 @@ describe "the header" do
       resize_window_to_mobile
     end
 
-    it "shows the Mapping PoliceViolence link" do
-      expect(find('.navbar-header')).to have_content('MAPPING POLICE VIOLENCE')
-    end
+    # it "displays the hamburger icon" do
+    #   expect(page.should have_css("navbar-toggle[display:none]"))
+    # end
   end
 end
