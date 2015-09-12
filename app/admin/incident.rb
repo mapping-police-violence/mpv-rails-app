@@ -18,4 +18,23 @@ ActiveAdmin.register Incident do
                   :action => :index,
                   :format => :json
   end
+
+  index do
+    selectable_column
+    column 'Name' do |incident|
+      link_to incident.victim_name, admin_incident_path(incident)
+    end
+    column 'Race', :victim_race
+    column 'Gender', :victim_gender
+    column 'Image' do |incident|
+      link_to 'link', incident.victim_image_url
+    end
+    column 'Date', :incident_date
+    column 'Street Address', :incident_street_address
+    column 'City', :incident_city
+    column 'State', :incident_state
+    column 'Agency Responsible', :agency_responsible
+    column 'Aggregate Crime Category', :aggregate_crime_category
+    column 'Unarmed', :unarmed
+  end
 end

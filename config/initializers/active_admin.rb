@@ -1,4 +1,10 @@
 ActiveAdmin.setup do |config|
+
+  # Move sidebar to left side of admin page
+  config.before_filter do
+    left_sidebar! if respond_to?(:left_sidebar!)
+  end
+
   # == Site Title
   #
   # Set the title that is displayed on the main layout

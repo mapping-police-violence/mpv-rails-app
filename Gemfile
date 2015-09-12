@@ -26,6 +26,7 @@ gem 'responders', '~> 2.0'
 
 gem 'activeadmin', github: 'activeadmin'
 gem 'devise'
+gem 'active_admin_sidebar', '~> 0.1.0.rc2'
 
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
