@@ -21,10 +21,29 @@ body {
 }
 
 .banner-text {
-	font-size: 34px;
+	font-size: 200%;
 	font-weight: bold;
 	padding: 80px 0 80px 0;
 	text-align: center;
+}
+
+.carousel-image {
+	}
+
+.carousel-wrapper {
+	align-items: center;
+	display: flex;
+	max-width: 93%;
+}
+
+.icon-bar {
+	background-color: white;
+}
+
+#left-carousel-link,
+#right-carousel-link {
+	font-size: 40px;
+	font-weight: lighter;
 }
 
 .large-map {
@@ -38,8 +57,4 @@ body {
 
 .navbar-links {
 	float: right;
-}
-
-.icon-bar {
-	background-color: white;
 }
