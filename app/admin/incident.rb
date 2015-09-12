@@ -37,4 +37,43 @@ ActiveAdmin.register Incident do
     column 'Aggregate Crime Category', :aggregate_crime_category
     column 'Unarmed', :unarmed
   end
+
+  form do |f|
+    inputs do
+      input :victim_name, :as => :string
+      input :victim_age, :as => :number
+      input :victim_gender, :as => :select, :collection => Incident.gender_options
+      input :victim_race, :as => :select, :collection => Incident.race_options
+      input :victim_image_url, :as => :string
+      input :incident_date, :as => :date_select
+      input :incident_street_address, :as => :string
+      input :incident_city, :as => :string
+      input :incident_state, :as => :select, :collection => Incident.state_options
+      input :incident_zip, :as => :string
+      input :incident_county, :as => :string
+      input :agency_responsible, :as => :string
+      input :cause_of_death, :as => :select, :collection => Incident.cause_of_death_options
+      input :alleged_victim_crime, :as => :string
+      input :crime_category, :as => :select, :collection => Incident.crime_category_options
+      input :aggregate_crime_category, :as => :select, :collection => Incident.aggregate_crime_category_options
+      input :caveat, :as => :string
+      input :solution, :as => :string
+      input :incident_description
+      input :official_disposition_of_death, :as => :select, :collection => Incident.official_disposition_of_death_options
+      input :criminal_charges, :as => :string
+      input :news_url, :as => :string
+      input :mental_illness, :as => :select, :collection => Incident.mental_illness_options
+      input :unarmed, :as => :select, :collection => Incident.unarmed_options
+      input :line_of_duty, :as => :select, :collection => Incident.line_of_duty_options
+      input :note, :as => :string
+      input :in_custody, :as => :select, :collection => Incident.in_custody_options
+      input :arrest_related_death, :as => :string
+      input :unique_mpv, :as => :number
+      input :latitude, :as => :number
+      input :longitude, :as => :number
+    end
+    actions
+    semantic_errors
+
+  end
 end
