@@ -27,9 +27,6 @@ body {
 	text-align: center;
 }
 
-.carousel-image {
-	}
-
 .carousel-wrapper {
 	align-items: center;
 	display: flex;
@@ -42,6 +39,7 @@ body {
 
 #left-carousel-link,
 #right-carousel-link {
+	cursor: pointer;
 	font-size: 40px;
 	font-weight: lighter;
 }
@@ -54,6 +52,14 @@ body {
 	padding: 20px 0px 20px 0px;
 	width: 100%;
 }
+
+.navbar-text {
+	display: block;
+}
+
+.navbar-text.title-text {
+	margin-left: 15px;
+	}
 
 .navbar-links {
 	float: right;
