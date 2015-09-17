@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Easy example | CartoDB.js</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <link rel="shortcut icon" href="http://cartodb.com/assets/favicon.ico" />
+    <style>
+      html, body, #map {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+      }
+    </style>
+
+    <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.14/themes/css/cartodb.css" />
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <!-- include cartodb.js library -->
+    <script src="http://libs.cartocdn.com/cartodb.js/v3/3.14/cartodb.js"></script>
+
+    <script>
+
+
+    function detectmob() {
+   if(window.innerWidth <= 800 && window.innerHeight <= 600) {
+
+     return true;
+   } else {
+     return false;
+   }
+}
+      function main() {
+
+        var small_screen;
+        var map;
+        small_screen = detectmob();
+        cartodb.createVis('map', ' https://samswey.cartodb.com/api/v2/viz/0d44bd96-31d3-11e5-8953-0e9d821ea90d/viz.json')
+        .done(function(vis, layers) {
+  
+           map = vis.getNativeMap();
+
+      if(small_screen) {
+           map.setZoom(3);
+
+        
+      } else {
+           map.setZoom(4.5);
+      }
+        })
+        .error(function(err) {
+          console.log(err);
+        });
+      }
+      window.onload = main;
+    </script>
+  </body>
+</html>
