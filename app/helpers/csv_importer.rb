@@ -42,8 +42,9 @@ class CsvImporter
     end
   end
 
-  def self.import_the_counted filename
-    CSV.foreach filename do |row|
+  def self.import_the_counted file
+    csv_contents = file.read
+    CSV.parse(csv_contents) do |row|
       next if row[0].nil? || row[0] == "name"
 
       Incident.create!({

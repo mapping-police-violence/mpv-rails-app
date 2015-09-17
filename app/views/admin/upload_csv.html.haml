@@ -1,0 +1,10 @@
+= form_for :dump, :url=>{:action=>"import_csv"}, :html => { :multipart => true } do |f|
+
+  %label{:for => "dump_file"}
+
+    Select a CSV File :
+  = f.file_field :file
+
+  %br
+
+  = submit_tag 'Submit'

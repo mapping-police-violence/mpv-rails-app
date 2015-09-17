@@ -40,7 +40,8 @@ describe 'CsvImporter' do
 
   describe '#import_the_counted' do
     it 'imports the data correctly' do
-      CsvImporter.import_the_counted 'spec/fixtures/the_counted_data.csv'
+      file = File.new('spec/fixtures/the_counted_data.csv')
+      CsvImporter.import_the_counted file
       expect(Incident.all.count).to eq 4
 
       first_incident = Incident.where(:victim_name => "Roberto Ornelas").first
