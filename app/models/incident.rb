@@ -1,4 +1,7 @@
 class Incident < ActiveRecord::Base
+
+  before_create :generate_unique_mpv
+
   def self.state_options
     [
         'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY',
@@ -84,6 +87,11 @@ class Incident < ActiveRecord::Base
   def self.criminal_charges_options
     ['No Known Charges',
      'Charged with Crime']
+  end
+
+  private
+  def generate_unique_mpv
+    self.unique_mpv = UniqueMpvSeq.next unless self.unique_mpv
   end
 
 end

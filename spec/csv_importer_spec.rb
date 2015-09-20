@@ -40,6 +40,8 @@ describe 'CsvImporter' do
 
   describe '#import_the_counted' do
     it 'imports the data correctly' do
+      UniqueMpvSeq.create(:last_value => 5)
+
       file = File.new('spec/fixtures/the_counted_data.csv')
       CsvImporter.import_the_counted file
       expect(Incident.all.count).to eq 4
@@ -69,7 +71,7 @@ describe 'CsvImporter' do
       expect(first_incident.mental_illness).to eq nil
       expect(first_incident.unarmed).to eq "Unarmed"
       expect(first_incident.line_of_duty).to eq nil
-      expect(first_incident.unique_mpv).to eq nil
+      expect(first_incident.unique_mpv).to eq 6
       expect(first_incident.latitude).to eq nil
       expect(first_incident.longitude).to eq nil
 
