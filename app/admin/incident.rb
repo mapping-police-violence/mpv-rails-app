@@ -76,4 +76,14 @@ ActiveAdmin.register Incident do
     semantic_errors
 
   end
+
+  collection_action :upload_csv do
+    render "admin/upload_csv"
+  end
+
+  collection_action :import_csv, :method => :post do
+    CsvImporter.import_the_counted(params[:dump][:file])
+    redirect_to :action => :index, :notice => "CSV imported successfully!"
+  end
+
 end

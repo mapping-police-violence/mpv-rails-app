@@ -17,3 +17,18 @@
 //
 //   .status_tag { background: #6090DB; }
 
+.dashboard_button {
+  a {
+    background-color: #EFEFEF;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px #888888;
+    color: #5E6469;
+    font-size: large;
+    padding: 20px;
+    text-decoration: none;
+  }
+  :hover {
+    background-color: #DADADA;
+  }
+}
+
