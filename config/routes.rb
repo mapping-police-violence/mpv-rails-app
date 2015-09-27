@@ -56,6 +56,9 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  get 'home/index'
+  root 'home#index'
+
   namespace :api do
     namespace :v1 do
       resources :incidents, only: [:index]
