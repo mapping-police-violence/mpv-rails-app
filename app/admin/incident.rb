@@ -82,7 +82,7 @@ ActiveAdmin.register Incident do
   end
 
   collection_action :import_csv, :method => :post do
-    CsvImporter.import_the_counted(params[:dump][:file])
+    CountedImporter.import(params[:dump][:file])
     redirect_to :action => :index, :notice => "CSV imported successfully!"
   end
 
