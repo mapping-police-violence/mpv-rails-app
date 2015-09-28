@@ -45,10 +45,11 @@ class FatalEncountersImporter
     elsif input == 'Hispanic/Latino'
       'Hispanic'
     elsif input == 'Native American/Alaskan'
-      'Native American/Alaskan'
-    elsif input == 'Unknown'
+      'Native American'
+    elsif input == 'Unknown race'
       'Unknown Race'
     else
+      # todo: source of truth for race categories. some entries say asian, some say asian/pacific islander
       input
     end
   end

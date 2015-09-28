@@ -7,7 +7,7 @@ describe 'FatalEncountersImporter' do
 
       file = File.new('spec/fixtures/fatal_encounters_data.csv')
       FatalEncountersImporter.import file
-      expect(Incident.all.count).to eq 3
+      expect(Incident.all.count).to eq 7
 
       first_incident = Incident.where(:victim_name => 'Raymond Herisse').first
       expect(first_incident.victim_age).to eq 22
@@ -37,6 +37,26 @@ describe 'FatalEncountersImporter' do
       expect(first_incident.unique_mpv).to eq 6
       expect(first_incident.latitude).to eq nil
       expect(first_incident.longitude).to eq nil
+
+      second_incident = Incident.where(:victim_name => 'Gil Collar').first
+      expect(second_incident.victim_race).to eq 'White'
+
+      third_incident = Incident.where(:victim_name => 'Andy Lopez').first
+      expect(third_incident.victim_race).to eq 'Hispanic'
+
+      fourth_incident = Incident.where(:victim_name => 'Jack Sun Keewatinawin').first
+      expect(fourth_incident.victim_race).to eq 'Native American'
+
+      fifth_incident = Incident.where(:victim_name => 'Wilson A. Lutz').first
+      expect(fifth_incident.victim_race).to eq 'Unknown Race'
+
+      sixth_incident = Incident.where(:victim_name => 'Ki Yang').first
+      expect(sixth_incident.victim_race).to eq 'Asian'
+
+      seventh_incident = Incident.where(:victim_name => 'Filimoni Raiyawa').first
+      expect(seventh_incident.victim_race).to eq 'Asian/Pacific Islander'
+
+
 
     end
   end
