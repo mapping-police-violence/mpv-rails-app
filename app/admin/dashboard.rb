@@ -10,6 +10,9 @@ ActiveAdmin.register_page "Dashboard" do
           span class: "dashboard_button" do
             link_to "Import CSV from The Counted", :controller => 'admin/incidents', :action => 'upload_csv'
           end
+          span class: "dashboard_button" do
+            link_to "Import CSV from Fatal Encounters", :controller => 'admin/incidents', :action => 'upload_csv'
+          end
       end
 
     end
