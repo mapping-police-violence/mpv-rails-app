@@ -2,7 +2,9 @@
   <p class="banner-text">180 black people have been killed by police in 2015. That's one person every 29 hours.</p>
 </div>
 <div>
-  <%= image_tag 'map.png', :class => 'large-map img-responsive' %>
+  <a id="map-link" href=<%= url_for :controller => 'home', :action => 'map' %>>
+    <%= image_tag 'map.png', :class => 'large-map img-responsive' %>
+  </a>
   <br>
 </div>
 <div class="carousel-wrapper">
