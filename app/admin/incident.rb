@@ -82,7 +82,12 @@ ActiveAdmin.register Incident do
   end
 
   collection_action :import_csv, :method => :post do
-    CountedImporter.import(params[:dump][:file])
+    if params[:type] == 'the_counted'
+      CountedImporter.import(params[:dump][:file])
+    elsif params[:type] == 'fatal_encounters'
+      FatalEncountersImporter.import(params[:dump][:file])
+    end
+
     redirect_to :action => :index, :notice => "CSV imported successfully!"
   end
 

@@ -1,4 +1,4 @@
-= form_for :dump, :url=>{:action=>"import_csv"}, :html => { :multipart => true } do |f|
+= form_for :dump, :url=>{:action=>"import_csv", :type => params[:type]}, :html => { :multipart => true } do |f|
 
   %label{:for => "dump_file"}
 

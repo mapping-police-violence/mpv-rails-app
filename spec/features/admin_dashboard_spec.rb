@@ -20,6 +20,21 @@ describe 'the dashboard' do
     expect(page).to have_content('Richard Carlin')
     expect(page).to have_content('Matthew Hoffman')
     expect(page).to have_content('Omarr Jackson')
+
+    expect(page.all('tr').size).to be 5
+  end
+
+  it "shows the import from the fatal encounters button" do
+    click_on 'Import CSV from Fatal Encounters'
+    expect(page).to have_content('Upload Csv')
+
+    attach_file "dump_file", "#{Rails.root}/spec/fixtures/fatal_encounters_data.csv"
+    click_button('Submit')
+
+    expect(page).to have_content('Incidents')
+    expect(page).to have_content('Raymond Herisse')
+    expect(page).to have_content('Filimoni Raiyawa')
+    expect(page.all('tr').size).to be 8
   end
 
 end

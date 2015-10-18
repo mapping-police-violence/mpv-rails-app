@@ -1,8 +1,9 @@
 require 'csv'
 
 class FatalEncountersImporter
-  def self.import filename
-    CSV.foreach filename do |row|
+  def self.import file
+    csv_contents = file.read
+    CSV.parse(csv_contents) do |row|
       next if row[0].nil? || row[0] == "Timestamp"
 
       Incident.create!({
