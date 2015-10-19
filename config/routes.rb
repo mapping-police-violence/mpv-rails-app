@@ -57,7 +57,6 @@ Rails.application.routes.draw do
   #   end
 
   get 'home/index'
-  get 'home/map'
   root 'home#index'
 
   namespace :api do

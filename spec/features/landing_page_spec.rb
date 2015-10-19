@@ -37,10 +37,9 @@ describe 'the homepage' do
     end
   end
 
-  describe 'clicking on the map' do
-    it 'links to the map page' do
-      click_link 'map-link'
-      expect(page.find "#map").to be_visible
+  describe 'map is present' do
+    it 'leaflet-map-pane exists' do
+      expect(page.find ".leaflet-map-pane").to be_visible
     end
   end
 end

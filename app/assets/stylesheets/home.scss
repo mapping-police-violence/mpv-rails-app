@@ -12,18 +12,19 @@ body {
   color: white;
 }
 
+body, html {
+  height: 100%;
+}
+
 .banner {
   background-color: red;
   display: inline-block;
-  height: 250px;
   width: 100%;
-  margin-bottom: 80px;
 }
 
 .banner-text {
-  font-size: 200%;
+  font-size: 15px;
   font-weight: bold;
-  padding: 80px 20px;
   text-align: center;
 }
 
@@ -36,6 +37,8 @@ body {
 
 .carousel-wrapper img {
   max-width: 100%;
+  height:auto;
+  max-height: 200px;
   margin: auto;
 }
 
@@ -67,6 +70,7 @@ body {
 
 nav.navbar {
   margin: 0;
+  width: 100%
 }
 
 .navbar-text {
@@ -96,8 +100,15 @@ nav.navbar {
   float: right;
 }
 
+.page-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height:100%;
+}
+
 #map {
-  height: 100%;
+  flex-grow: 1;
   width: 100%;
-  position: absolute;
+
 }
