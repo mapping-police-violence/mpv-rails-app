@@ -2,6 +2,23 @@ class Incident < ActiveRecord::Base
 
   before_create :generate_unique_mpv
 
+  geocoded_by :full_street_address
+  after_validation :geocode,
+                   if: ->(obj) {
+                     (obj.latitude.nil? ||  obj.longitude.nil? ) &&
+                     (obj.incident_street_address_changed? ||
+                         obj.incident_city_changed? ||
+                         obj.incident_state_changed? ||
+                         obj.incident_zip_changed?)
+                   }
+
+  def full_street_address
+    [incident_street_address,
+     incident_city,
+     incident_state,
+     incident_zip].reject(&:nil?).join(', ')
+  end
+
   def self.state_options
     [
         'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY',

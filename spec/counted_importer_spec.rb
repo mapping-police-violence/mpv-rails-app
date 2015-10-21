@@ -1,7 +1,13 @@
 require 'rails_helper'
+include GeocodingHelpers
 
 describe 'CountedImporter' do
   describe '#import' do
+
+    before do
+      stub_geocoding_request('39 N Marlin Ave, Key Largo, FL', 37.79951, -122.274911)
+    end
+
     it 'imports the data correctly' do
       UniqueMpvSeq.create(:last_value => 5)
 
@@ -35,8 +41,8 @@ describe 'CountedImporter' do
       expect(first_incident.unarmed).to eq "Unarmed"
       expect(first_incident.line_of_duty).to eq nil
       expect(first_incident.unique_mpv).to eq 6
-      expect(first_incident.latitude).to eq nil
-      expect(first_incident.longitude).to eq nil
+      expect(first_incident.latitude).to eq 37.79951
+      expect(first_incident.longitude).to eq -122.274911
 
       second_incident = Incident.where(:victim_name => "Omarr Jackson").first
       expect(second_incident.unarmed).to eq "Allegedly Armed"
