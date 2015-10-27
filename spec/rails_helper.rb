@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'helpers/responsive_helper'
+require 'helpers/geocoding_helper'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -52,4 +53,20 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+  config.before(:all) do
+    Geocoder.configure(lookup: :test)
+    Geocoder::Lookup::Test.set_default_stub(
+        [
+            {
+                'latitude'     => 40.7143528,
+                'longitude'    => -74.0059731,
+                'address'      => 'New York, NY, USA',
+                'state'        => 'New York',
+                'state_code'   => 'NY',
+                'country'      => 'United States',
+                'country_code' => 'US'
+            }
+        ]
+    )
+  end
 end
