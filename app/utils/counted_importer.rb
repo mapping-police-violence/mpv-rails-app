@@ -1,25 +1,25 @@
 require 'csv'
 
-class CountedImporter
-  def self.import file
-    csv_contents = file.read
-    CSV.parse(csv_contents) do |row|
-      next if row[0].nil? || row[0] == "name"
+class CountedImporter < DataImporter
 
-      Incident.create!({
-                           :victim_name => row[0],
-                           :victim_age => row[1],
-                           :victim_gender => row[2],
-                           :victim_race => parse_race(row[3]),
-                           :incident_date => parse_date(row[4],row[5],row[6]),
-                           :incident_street_address => row[7],
-                           :incident_city => row[8],
-                           :incident_state => row[9],
-                           :cause_of_death => row[10],
-                           :agency_responsible => row[11],
-                           :unarmed => parse_unarmed(row[12])
-                       })
-    end
+  def self.is_valid row
+    !row[0].nil? && row[0] != 'name'
+  end
+
+  def self.import_row row
+    Incident.create!({
+                         :victim_name => row[0],
+                         :victim_age => row[1],
+                         :victim_gender => row[2],
+                         :victim_race => parse_race(row[3]),
+                         :incident_date => parse_date(row[4],row[5],row[6]),
+                         :incident_street_address => row[7],
+                         :incident_city => row[8],
+                         :incident_state => row[9],
+                         :cause_of_death => row[10],
+                         :agency_responsible => row[11],
+                         :unarmed => parse_unarmed(row[12])
+                     })
   end
 
   def self.parse_race input

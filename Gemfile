@@ -29,6 +29,7 @@ gem 'devise'
 gem 'active_admin_sidebar', '~> 0.1.0.rc2'
 
 gem 'haml'
+gem 'roo'
 
 gem 'geocoder'
 
