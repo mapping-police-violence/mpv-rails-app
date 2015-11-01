@@ -6,35 +6,29 @@ class KilledByPoliceImporter < DataImporter
     # whatever the dumb unlabeled column is, it's only present in valid rows
     # so, check for the presence of that
     !row[4].nil? && !row[4].empty?
+  end
 
-    def self.import_row(row)
-      parsed_data = {}
-      # This source csv has an *interesting* design.
-      # There are several values jammed into some columns, comma or dash delimited.
-      # Some values jammed into the columns may or may not be present.
-      # soooo, let's parse this data into clean key/value pairs before we create this incident.
-      # why is this throwing an UndefinedMethod error???!?
-      race_and_gender = parse_race_and_gender(row[2])
-      # race_and_gender = {:gender => 'M', :race => 'B'}
-      parsed_data.merge!(race_and_gender)
-      # print parsed_data
-      # print 'foo\n'
-      # print row[3]
-      name_and_age = parse_name_and_age(row[3])
-      parsed_data.merge!(name_and_age)
+  def self.import_row(row)
+    parsed_data = {}
+    # This source csv has an *interesting* design.
+    # There are several values jammed into some columns, comma or dash delimited.
+    # Some values jammed into the columns may or may not be present.
+    # soooo, let's parse this data into clean key/value pairs before we create this incident.
+    race_and_gender = parse_race_and_gender(row[2])
+    parsed_data.merge!(race_and_gender)
+    name_and_age = parse_name_and_age(row[3])
+    parsed_data.merge!(name_and_age)
 
-      Incident.create!({
-                           :incident_date => parse_date(row[0]),
-                           :incident_state => row[1],
-                           :victim_gender => parsed_data[:gender],
-                           :victim_race => parsed_data[:race],
-                           :victim_name => parsed_data[:name],
-                           :victim_age => parsed_data[:age],
-                           :news_url => row[6
-                           ]
-                       })
-
-    end
+    incident = Incident.create!({
+                         :incident_date => parse_date(row[0]),
+                         :incident_state => row[1],
+                         :victim_gender => parsed_data[:gender],
+                         :victim_race => parsed_data[:race],
+                         :victim_name => parsed_data[:name],
+                         :victim_age => parsed_data[:age],
+                         :victim_image_url => parsed_data[:image_link],
+                         :news_url => parse_news_url(row[6])
+                     })
   end
 
   def self.parse_date input
@@ -44,16 +38,24 @@ class KilledByPoliceImporter < DataImporter
     if input != nil
       parsed_date = input.gsub /\(\d*\)/, ''
     end
-    parsed_date
+    parsed_date.split('\r?\n')[0]
   end
 
   def self.parse_name_and_age(input)
     # input is in the format 'name, age' or ',age' if name is missing
+    # also may include an image URL if it's a Roo::Link
     parsed_input = {}
-    if input.class == String
+    # TODO: learn the idiomatic way of checking if input has the href attribute, rather
+    # than explicitly checking the class
+    if input.class == Roo::Link
+      parsed_input[:image_link] = input.href
+    end
+    unless input.nil?
       split_input = input.split(',')
-      parsed_input[:name] = split_input[0]
-      if split_input[1] != ''
+      unless split_input[0].empty?
+        parsed_input[:name] = split_input[0]
+      end
+      unless split_input[1].empty?
         parsed_input[:age] = split_input[1]
       end
     end
@@ -99,13 +101,14 @@ class KilledByPoliceImporter < DataImporter
     else
       gender = 'Male'
     end
-    gender
   end
 
   def self.parse_race(input)
     race = ''
     if input == 'B'
       race = 'Black'
+    elsif input == 'A'
+      race = 'Asian'
     elsif input == 'W'
       race = 'White'
     elsif input == 'L'
@@ -114,7 +117,10 @@ class KilledByPoliceImporter < DataImporter
       race = 'Native American'
     else
       race = 'Unknown Race'
-      race
     end
+  end
+
+  def self.parse_news_url(input)
+    URI.parse(input.split[0])
   end
 end
