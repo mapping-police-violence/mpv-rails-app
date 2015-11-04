@@ -10,8 +10,8 @@ describe 'the dashboard' do
   end
 
   it "shows the import from the counted button" do
-    click_on 'Import CSV from The Counted'
-    expect(page).to have_content('Upload Csv')
+    click_on 'Import from The Counted'
+    expect(page).to have_content('Upload')
 
     attach_file "dump_file", "#{Rails.root}/spec/fixtures/the_counted_data.csv"
     click_button('Submit')
@@ -21,12 +21,13 @@ describe 'the dashboard' do
     expect(page).to have_content('Matthew Hoffman')
     expect(page).to have_content('Omarr Jackson')
 
+    # expected number of incidents, plus extra header row
     expect(page.all('tr').size).to be 5
   end
 
   it "shows the import from the fatal encounters button" do
-    click_on 'Import CSV from Fatal Encounters'
-    expect(page).to have_content('Upload Csv')
+    click_on 'Import from Fatal Encounters'
+    expect(page).to have_content('Upload')
 
     attach_file "dump_file", "#{Rails.root}/spec/fixtures/fatal_encounters_data.csv"
     click_button('Submit')
@@ -35,6 +36,18 @@ describe 'the dashboard' do
     expect(page).to have_content('Raymond Herisse')
     expect(page).to have_content('Filimoni Raiyawa')
     expect(page.all('tr').size).to be 8
+  end
+
+  it "shows the import from killed by police button" do
+    click_on 'Import from Killed By Police'
+    expect(page).to have_content('Upload')
+
+    attach_file "dump_file", "#{Rails.root}/spec/fixtures/killed_by_police_data.xlsx"
+    click_button('Submit')
+
+    expect(page).to have_content('Incidents')
+    expect(page).to have_content('Kobvey Igbuhay')
+    expect(page.all('tr').size).to be 13
   end
 
 end

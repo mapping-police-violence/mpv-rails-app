@@ -5,7 +5,7 @@ describe 'KilledByPoliceImporter' do
     it 'imports the data correctly' do
       file = File.new('spec/fixtures/killed_by_police_data.xlsx')
       KilledByPoliceImporter.import file
-      expect(Incident.all.count).to eq 11
+      expect(Incident.all.count).to eq 12
 
       first_incident = Incident.where(:victim_name => 'Kobvey Igbuhay').first
       expect(first_incident.victim_age).to eq 18
@@ -54,8 +54,17 @@ describe 'KilledByPoliceImporter' do
       expect(seventh_incident.victim_race).to eq 'Asian'
 
       # two incidents jammed into one row
-      # eighth_incident = Incident.where(:incident_date => Date.parse("6/9/2015")).first
-      # expect(eighth_incident.victim_name).to eq "Angelo Delano Perry"
+      eighth_entry = Incident.where(:incident_date => Date.parse("6/9/2015"))
+      expect(eighth_entry.first.victim_name).to eq 'Angelo Delano Perry'
+      expect(eighth_entry.first.victim_age).to eq 35
+      expect(eighth_entry.first.victim_gender).to eq 'Male'
+      expect(eighth_entry.second.victim_name).to eq 'India Kager'
+      expect(eighth_entry.second.victim_age).to eq 28
+      expect(eighth_entry.second.victim_gender).to eq 'Female'
+      # the xlsx importer gem we are using can't handle multiple links in the same cell, so we
+      # are currently unable to handle this edge case.
+      #expect(eighth_entry.first.victim_image_url).to eq 'http://www.killedbypolice.net/victims/150812.jpg'
+      #expect(eighth_entry.second.victim_image_url).to eq 'http://www.killedbypolice.net/victims/150811.jpg'
 
       # multiple news URLs with plaintext
       ninth_incident = Incident.where(:victim_name => 'Gilbert Flores').first

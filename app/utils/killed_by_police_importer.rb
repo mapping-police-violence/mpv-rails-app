@@ -9,26 +9,43 @@ class KilledByPoliceImporter < DataImporter
   end
 
   def self.import_row(row)
-    parsed_data = {}
+
+    date = parse_date(row[0])
+    news_url = parse_news_url(row[6])
+
+    # split rows apart to handle cases where they contain multiple victims
+    race_and_gender_rows = row[2].split("\n")
+
+    if !row[3].nil? && (row[3].include? "\n")
+      name_and_age_rows = row[3].split("\n")
+    else
+      name_and_age_rows = [ row[3] ]
+    end
+
+    (0..name_and_age_rows.length-1).each do |i|
+      import_victim(name_and_age_rows[i], race_and_gender_rows[i], date, row[1], news_url)
+    end
+
+  end
+
+  def self.import_victim(name_and_age, race_and_gender, date, state, news_url)
     # This source csv has an *interesting* design.
     # There are several values jammed into some columns, comma or dash delimited.
     # Some values jammed into the columns may or may not be present.
     # soooo, let's parse this data into clean key/value pairs before we create this incident.
-    race_and_gender = parse_race_and_gender(row[2])
-    parsed_data.merge!(race_and_gender)
-    name_and_age = parse_name_and_age(row[3])
-    parsed_data.merge!(name_and_age)
+    parsed_data = parse_race_and_gender(race_and_gender)
+    parsed_data.merge!(parse_name_and_age(name_and_age))
 
-    incident = Incident.create!({
-                         :incident_date => parse_date(row[0]),
-                         :incident_state => row[1],
-                         :victim_gender => parsed_data[:gender],
-                         :victim_race => parsed_data[:race],
-                         :victim_name => parsed_data[:name],
-                         :victim_age => parsed_data[:age],
-                         :victim_image_url => parsed_data[:image_link],
-                         :news_url => parse_news_url(row[6])
-                     })
+    Incident.create!({
+                                    :incident_date => date,
+                                    :incident_state => state,
+                                    :victim_gender => parsed_data[:gender],
+                                    :victim_race => parsed_data[:race],
+                                    :victim_name => parsed_data[:name],
+                                    :victim_age => parsed_data[:age],
+                                    :victim_image_url => parsed_data[:image_link],
+                                    :news_url => news_url
+                                })
   end
 
   def self.parse_date input
@@ -36,9 +53,9 @@ class KilledByPoliceImporter < DataImporter
     # (956) October 20, 2015 turns into an actual date object representing October 20, 2015
     parsed_date = nil
     if input != nil
-      parsed_date = input.gsub /\(\d*\)/, ''
+      parsed_date = input.gsub /\(.*\)/, ''
     end
-    parsed_date.split('\r?\n')[0]
+    parsed_date.split("\n")[0]
   end
 
   def self.parse_name_and_age(input)
@@ -84,7 +101,7 @@ class KilledByPoliceImporter < DataImporter
     parsed_data = {}
     if input.length == 1
       parsed_data[:gender] = parse_gender(input)
-
+      parsed_data[:race] = parse_race(nil)
     else
       split_input = input.split('/')
       parsed_data[:gender] = parse_gender(split_input[0])
