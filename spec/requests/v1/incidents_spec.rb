@@ -2,7 +2,7 @@ require 'rails_helper'
 
 describe "Incidents API" do
   it 'sends a list of incidents', type: :request  do
-    CsvImporter.import 'spec/fixtures/test_data.csv'
+    MpvImporter.import 'spec/fixtures/test_data.csv'
 
     get '/api/v1/incidents', nil, {'HTTP_ACCEPT' => "application/json"}
 

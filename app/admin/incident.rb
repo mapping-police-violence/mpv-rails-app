@@ -77,11 +77,11 @@ ActiveAdmin.register Incident do
 
   end
 
-  collection_action :upload_csv do
-    render "admin/upload_csv"
+  collection_action :upload_file do
+    render 'admin/upload_file'
   end
 
-  collection_action :import_csv, :method => :post do
+  collection_action :import_file, :method => :post do
     if params[:type] == 'the_counted'
       CountedImporter.import(params[:dump][:file])
     elsif params[:type] == 'fatal_encounters'
@@ -89,10 +89,10 @@ ActiveAdmin.register Incident do
     elsif params[:type] == 'killed_by_police'
       KilledByPoliceImporter.import(params[:dump][:file])
     elsif params[:type] == 'mpv'
-      CsvImporter.import(params[:dump][:file])
+      MpvImporter.import(params[:dump][:file])
     end
 
-    redirect_to :action => :index, :notice => "CSV imported successfully!"
+    redirect_to :action => :index, :notice => 'File imported successfully!'
   end
 
 end

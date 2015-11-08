@@ -5,4 +5,4 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-CsvImporter.import 'db/seeds/mpv_data.csv'
+MpvImporter.import 'db/seeds/mpv_data.csv'

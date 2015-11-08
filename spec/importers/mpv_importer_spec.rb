@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-describe 'CsvImporter' do
+describe 'MpvImporter' do
   describe '#import' do
     it 'imports the data correctly' do
-      CsvImporter.import 'spec/fixtures/test_data.csv'
+      MpvImporter.import 'spec/fixtures/test_data.csv'
       expect(Incident.all.count).to eq 2
 
       first_incident = Incident.first

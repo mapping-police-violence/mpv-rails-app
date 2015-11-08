@@ -1,6 +1,6 @@
 require 'csv'
 
-class CsvImporter < DataImporter
+class MpvImporter < DataImporter
   def self.is_valid(row)
     !row[0].nil? && row[0] != 'Id'
   end
