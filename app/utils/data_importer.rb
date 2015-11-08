@@ -9,6 +9,10 @@ class DataImporter
 
   def self.import file
     contents = nil
+    if !(file.respond_to? :path) || !(file.respond_to? :read)
+      file = File.new(file)
+    end
+
     if contains_extension(file.path, 'xls')
       contents = Roo::Spreadsheet.open(file.path)
     else

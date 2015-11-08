@@ -18,6 +18,11 @@ ActiveAdmin.register_page "Dashboard" do
         end
 
       end
+      column do
+        span class: "dashboard_button" do
+          link_to "Re-import exported data", :controller => 'admin/incidents', :action => 'upload_csv', :type => 'mpv'
+        end
+      end
     end # content
   end
 end

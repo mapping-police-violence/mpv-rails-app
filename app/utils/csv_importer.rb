@@ -1,10 +1,11 @@
 require 'csv'
 
-class CsvImporter
-  def self.import filename
-    CSV.foreach filename do |row|
-      next if row[0].nil? || row[0] == "Id"
+class CsvImporter < DataImporter
+  def self.is_valid(row)
+    !row[0].nil? && row[0] != 'Id'
+  end
 
+  def self.import_row(row)
       Incident.create!({
                           :victim_name => row[1],
                           :victim_age => row[2],
@@ -40,5 +41,4 @@ class CsvImporter
                       })
 
     end
-  end
 end

@@ -62,9 +62,7 @@ class KilledByPoliceImporter < DataImporter
     # input is in the format 'name, age' or ',age' if name is missing
     # also may include an image URL if it's a Roo::Link
     parsed_input = {}
-    # TODO: learn the idiomatic way of checking if input has the href attribute, rather
-    # than explicitly checking the class
-    if input.class == Roo::Link
+    if input.respond_to? :href
       parsed_input[:image_link] = input.href
     end
     unless input.nil?

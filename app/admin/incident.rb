@@ -88,6 +88,8 @@ ActiveAdmin.register Incident do
       FatalEncountersImporter.import(params[:dump][:file])
     elsif params[:type] == 'killed_by_police'
       KilledByPoliceImporter.import(params[:dump][:file])
+    elsif params[:type] == 'mpv'
+      CsvImporter.import(params[:dump][:file])
     end
 
     redirect_to :action => :index, :notice => "CSV imported successfully!"
