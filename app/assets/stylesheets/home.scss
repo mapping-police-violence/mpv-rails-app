@@ -61,6 +61,14 @@ body, html {
   display: block;
   margin: 0 auto;
 }
+
+.map-pin-icon {
+  border: 1px solid darkred;
+  border-radius: 50%;
+  background: red;
+  height: 5px;
+}
+
 .navbar-header {
   padding: 20px;
   width: 100%;
