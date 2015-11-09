@@ -1,13 +1,26 @@
 class UniqueMpvSeq < ActiveRecord::Base
   self.table_name = 'unique_mpv_seq'
 
+  def self.last
+    self.sequence.last_value
+  end
+
+  def self.update_last(value)
+    self.sequence.update!(:last_value => value)
+  end
+
   def self.next
-    sequence = UniqueMpvSeq.first
-    if sequence.nil?
-      sequence = UniqueMpvSeq.create(:last_value => 0)
-    end
-    new_value = sequence.last_value + 1
-    sequence.update!(:last_value => new_value)
+    new_value = last + 1
+    update_last(new_value)
     new_value
+  end
+
+  private
+  def self.sequence
+    if UniqueMpvSeq.first
+      UniqueMpvSeq.first
+    else
+      UniqueMpvSeq.create(:last_value => 0)
+    end
   end
 end

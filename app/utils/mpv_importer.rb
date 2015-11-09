@@ -1,6 +1,16 @@
 require 'csv'
 
 class MpvImporter < DataImporter
+  def self.preprocess_contents contents
+    # sort consecutively by unique_mpv, with entries with missing values at the end.
+    # this ensures that no new unique_mpv values will be assigned until the existing ones
+    # have been imported, avoiding conflicts.
+    contents.sort_by! do |a|
+      missing = a.nil? || a[29].nil?
+      [missing ? 1 : 0, a[29]]
+    end
+  end
+
   def self.is_valid(row)
     !row[0].nil? && row[0] != 'Id'
   end

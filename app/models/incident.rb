@@ -119,7 +119,15 @@ class Incident < ActiveRecord::Base
 
   private
   def generate_unique_mpv
-    self.unique_mpv = UniqueMpvSeq.next unless self.unique_mpv
+    if self.unique_mpv.nil?
+      self.unique_mpv = UniqueMpvSeq.next
+    elsif self.unique_mpv > UniqueMpvSeq.last
+      # If the existing unique_mpv is higher than anything we've seen before, advance the sequence
+      # counter to match it. This will work as long as all entries with existing unique_mpv
+      # values are imported prior to assigning any new unique_mpv values. For the time being, this
+      # assumption is enforced in the importer. If it is violated, collisions may result.
+      UniqueMpvSeq.update_last(self.unique_mpv)
+    end
   end
 
 end

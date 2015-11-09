@@ -19,10 +19,15 @@ class DataImporter
       contents = CSV.parse(file.read)
     end
 
+    preprocess_contents(contents)
     contents.each do |row|
       next if !is_valid(row)
       import_row(row)
     end
+  end
+
+  def self.preprocess_contents contents
+    # no preprocessing required by default
   end
 
   def self.is_valid row
