@@ -14,12 +14,12 @@ describe 'the homepage' do
 
     it 'links to the cities page' do
       href = 'http://mappingpoliceviolence.org/cities/'
-      page.should have_selector ".navbar-header a[href='#{href}']", text: 'STATES & CITIES'
+      expect(page).to have_selector ".navbar-header a[href='#{href}']", text: 'STATES & CITIES'
     end
 
     it 'links to the reports page' do
       href = 'http://mappingpoliceviolence.org/reports/'
-      page.should have_selector ".navbar-header a[href='#{href}']", text: 'REPORTS'
+      expect(page).to have_selector ".navbar-header a[href='#{href}']", text: 'REPORTS'
     end
 
     it 'hides the hamburger menu in full screen view' do
