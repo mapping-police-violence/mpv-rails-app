@@ -57,4 +57,44 @@ describe 'Incident' do
       expect(subject.longitude).to eq 123.7654321
     end
   end
+
+  context 'rate-limiting' do
+    it 'throttles incident creation rate to respect geocoding rate limit' do
+      subject1 = Incident.create(
+          :incident_street_address => '455 7th St',
+          :incident_city => 'Oakland',
+          :incident_state => 'CA',
+          :incident_zip => '94607'
+      )
+      time_after_first_create = Time::now
+      subject2 = Incident.create(
+          :incident_street_address => '455 7th St',
+          :incident_city => 'Oakland',
+          :incident_state => 'CA',
+          :incident_zip => '94607'
+      )
+
+      expect(Time::now - time_after_first_create > 1.0/Incident::MAX_GEOCODE_CALLS_PER_SECOND)
+    end
+
+    it 'refrains from throttling incident creation rate for incidents that do not require geocoding' do
+      Incident.create(
+          :incident_street_address => '455 7th St',
+          :incident_city => 'Oakland',
+          :incident_state => 'CA',
+          :incident_zip => '94607',
+          :latitude => 88.9000001,
+          :longitude => 123.7654321
+      )
+      time_after_first_create = Time::now
+      Incident.create(
+          :incident_street_address => '455 7th St',
+          :incident_city => 'Oakland',
+          :incident_state => 'CA',
+          :incident_zip => '94607'
+      )
+
+      expect(Time::now - time_after_first_create < 1.0/Incident::MAX_GEOCODE_CALLS_PER_SECOND)
+    end
+  end
 end

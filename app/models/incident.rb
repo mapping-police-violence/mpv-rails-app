@@ -2,8 +2,10 @@ class Incident < ActiveRecord::Base
 
   before_create :generate_unique_mpv
 
+  @@last_geocode_time = nil
+  MAX_GEOCODE_CALLS_PER_SECOND = 10  # google API limit
   geocoded_by :full_street_address
-  after_validation :geocode,
+  after_validation :geocode_with_rate_limit,
                    if: ->(obj) {
                      (obj.latitude.nil? ||  obj.longitude.nil? ) &&
                      (obj.incident_street_address_changed? ||
@@ -11,6 +13,15 @@ class Incident < ActiveRecord::Base
                          obj.incident_state_changed? ||
                          obj.incident_zip_changed?)
                    }
+
+  def geocode_with_rate_limit
+    if !@@last_geocode_time.nil?
+      sleep_duration = @@last_geocode_time + 1.0/MAX_GEOCODE_CALLS_PER_SECOND - Time::now
+      sleep(sleep_duration) unless sleep_duration < 0
+    end
+    geocode
+    @@last_geocode_time = Time::now
+  end
 
   def full_street_address
     [incident_street_address,
