@@ -74,7 +74,10 @@ describe 'Incident' do
           :incident_zip => '94607'
       )
 
-      expect(Time::now - time_after_first_create > 1.0/Incident::MAX_GEOCODE_CALLS_PER_SECOND)
+      delay = Time::now - time_after_first_create
+      min_time = 1.0/Incident::MAX_GEOCODE_CALLS_PER_SECOND
+      expect(delay > min_time)
+      expect(delay < min_time * 1.5)
     end
 
     it 'refrains from throttling incident creation rate for incidents that do not require geocoding' do
