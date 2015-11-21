@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mapping-police-violence/mpv-rails-app.svg?branch=master)](https://travis-ci.org/mapping-police-violence/mpv-rails-app)
+
 ### Dependencies
 * git
 * homebrew
