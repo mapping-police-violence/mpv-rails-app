@@ -16,7 +16,9 @@ ActiveAdmin.register_page 'Dashboard' do
         span class: 'dashboard_button' do
           link_to 'Import from Killed By Police', :controller => 'admin/incidents', :action => 'upload_file', :type => 'killed_by_police'
         end
-
+        span class: 'dashboard_button' do
+          link_to 'Re-import MPV data', :controller => 'admin/incidents', :action => 'upload_file', :type => 'mpv'
+        end
       end
     end # content
   end

@@ -50,4 +50,15 @@ describe 'the dashboard' do
     expect(page.all('tr').size).to be 13
   end
 
+  it "shows the import from mpv button" do
+    click_on 'Re-import MPV data'
+    expect(page).to have_content('Upload')
+    attach_file "dump_file", "#{Rails.root}/spec/fixtures/test_data.csv"
+
+    click_button('Submit')
+    expect(page).to have_content('Incidents')
+    expect(page).to have_content('Garrett Chruma')
+    expect(page.all('tr').size).to be 6
+  end
+
 end
