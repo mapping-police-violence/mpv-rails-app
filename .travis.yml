@@ -1,11 +1,17 @@
 language: ruby
 rvm:
-  - 2.2.2
+- 2.2.2
 before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
+- export DISPLAY=:99.0
+- sh -e /etc/init.d/xvfb start
+- sleep 3
 script:
-  - bundle exec rake db:test:prepare
-  - bundle exec rake
-  - bundle exec rake jasmine:ci
+- bundle exec rake db:test:prepare
+- bundle exec rake
+- bundle exec rake jasmine:ci
+notifications:
+  slack:
+    on_success: change
+    on_failure: always
+    secure: tMLurPkLO31I0sSFVyd+K7m92Pvgbfy1zxbvDUbapMEEH+CEMrlwZRWj2Z96SdIt1muhY5493jtFl/Z3L+unPnKVYDfGLdNrfI7rw8OFniEyGTNGw/OCr9S03se9ZjxXwPnbiMSpHa+sxnlqGYszT02Dh1m/E/SndQknh6h694MaAizQkiUYAWDq8skTT9915+hSpeTRIO5/2kgqHUd7l58aW7B0Pk7pEtvbJwhD4UdinEAmwNG8fkVk4X83wrKmi+B3GllNGO1BA7jspce/BjtXbH3wZObL+Pd4cpPYGwBbl87OrlI2FxI4PrsY18gCy12ZoTN9F9xdeWGjkPr61sRdQGIapZlDZTa5yJyGPmSz4YU2/TcHXg9ydsK+Em9ScNFy54ATbcPU5PYvvw9xdIb+3pJl2/w1rXwJ9EmaZobKY9XjB3sTckI6d5JycMO8D9OhnAdYE4PtniKjSjJCxYhlVPo/zWCfshUrw0XtaP8HdyCyM/pHj3sahYI1ytSf8I5gR9GStEucPpP/xZaZdFqYaTOIAwPeihwD1nkv+cEEOGEMMdSA8zugnp/gopgr7vzHP3pP6jn0qsMqLiQkhicHG5sLRaq28EHSemXoY3/hd4gfmMefHBW4+SeNhmb+uGVj9G5TVWhpdA2FhPxhvVnC4GGKOL/uP9pltoWn+vA=
+  email: false
