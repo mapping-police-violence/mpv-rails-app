@@ -39,17 +39,17 @@ describe 'the homepage' do
 
     it 'displays the carousel' do
       expect(page.find ".carousel-wrapper").to be_visible
-      page.find(".carousel-image")['src'].should have_content 'carousel_1.png'
+      expect(page.find(".carousel-image")['src']).to have_content 'carousel_1.png'
     end
 
     it 'clicking right advances the image carousel' do
       page.find("#right-carousel-link").click
-      page.find(".carousel-image")['src'].should have_content 'carousel_2.png'
+      expect(page.find(".carousel-image")['src']).to have_content 'carousel_2.png'
     end
 
     it 'clicking left rewinds (is that the right word? shrug) the image carousel' do
       page.find("#left-carousel-link").click
-      page.find(".carousel-image")['src'].should have_content 'carousel_4.png'
+      expect(page.find(".carousel-image")['src']).to have_content 'carousel_4.png'
     end
 
   describe 'map is present' do

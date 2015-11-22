@@ -4,6 +4,6 @@ class Api::V1::IncidentsController < ApplicationController
   caches_action(:index)
 
   def index
-    respond_with Incident.all
+    respond_with Incident.all.order(:incident_date)
   end
 end
