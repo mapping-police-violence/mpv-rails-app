@@ -12,7 +12,7 @@ class MpvImporter < DataImporter
   end
 
   def self.is_valid(row)
-    !row[0].nil? && row[0] != 'Id'
+    !row[0].nil? && !(/Id/ =~ row[0] && /Victim name/ =~ row[1])
   end
 
   def self.import_row(row)
