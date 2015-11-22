@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Incidents API</title>
+    <meta charset="utf-8">
+    <style>
+      
+body {
+  font-family: Helvetica,Arial,sans-serif;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 18px;
+  color: #404040;
+}
+
+.container {
+  width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+  zoom: 1;
+}
+
+pre {
+  background-color: #f5f5f5;
+  display: block;
+  padding: 8.5px;
+  margin: 0 0 18px;
+  line-height: 18px;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+td.required .name:after {
+  float: right;
+  content: "required";
+  font-weight: normal;
+  color: #F08080;
+}
+
+a{
+  color: #0069d6;
+  text-decoration: none;
+  line-height: inherit;
+  font-weight: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+  color: #404040;
+}
+
+h1 {
+  margin-bottom: 18px;
+  font-size: 30px;
+  line-height: 36px;
+}
+h2 {
+  font-size: 24px;
+  line-height: 36px;
+}
+h3{
+  font-size: 18px;
+  line-height: 36px;
+}
+h4 {
+  font-size: 16px;
+  line-height: 36px;
+}
+
+table{
+  width: 100%;
+  margin-bottom: 18px;
+  padding: 0;
+  border-collapse: separate;
+  font-size: 13px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  border-spacing: 0;
+  border: 1px solid #ddd;
+}
+
+table th {
+  padding-top: 9px;
+  font-weight: bold;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+}
+table th+th, table td+td {
+  border-left: 1px solid #ddd;
+}
+table th, table td {
+  padding: 10px 10px 9px;
+  line-height: 18px;
+  text-align: left;
+}
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Incidents API</h1>
+
+      <div class="article">
+        <h2>Getting a list of incidents</h2>
+        <h3>GET /api/v1/incidents</h3>
+
+
+
+          <h3>Request</h3>
+
+            <h4>Headers</h4>
+            <pre class="request headers">Accept: application/json
+Host: example.org
+Cookie: </pre>
+
+          <h4>Route</h4>
+          <pre class="request route highlight">GET /api/v1/incidents</pre>
+
+
+
+
+            <h3>Response</h3>
+              <h4>Headers</h4>
+              <pre class="response headers">X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 1; mode=block
+X-Content-Type-Options: nosniff
+Content-Type: application/json; charset=utf-8
+ETag: W/&quot;05e89192911e06caea0ea265a3de2a6b&quot;
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: aed60c0a-a604-495b-bede-389464b9f226
+X-Runtime: 0.043979
+Content-Length: 5967</pre>
+            <h4>Status</h4>
+            <pre class="response status">200 OK</pre>
+              <h4>Body</h4>
+              <pre class="response body">[
+  {
+    &quot;id&quot;: 1554,
+    &quot;victim_name&quot;: &quot;Kong Nay&quot;,
+    &quot;victim_age&quot;: 34,
+    &quot;victim_gender&quot;: &quot;Male&quot;,
+    &quot;victim_race&quot;: &quot;Asian&quot;,
+    &quot;victim_image_url&quot;: null,
+    &quot;incident_date&quot;: &quot;2000-01-01&quot;,
+    &quot;incident_street_address&quot;: &quot;Broad River Rd &amp; Kennerly Rd&quot;,
+    &quot;incident_city&quot;: &quot;Columbia&quot;,
+    &quot;incident_state&quot;: &quot;SC&quot;,
+    &quot;incident_zip&quot;: &quot;29063&quot;,
+    &quot;incident_county&quot;: &quot;Richland&quot;,
+    &quot;agency_responsible&quot;: &quot;Richland County Sheriff&#39;s Office&quot;,
+    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
+    &quot;alleged_victim_crime&quot;: null,
+    &quot;crime_category&quot;: null,
+    &quot;aggregate_crime_category&quot;: null,
+    &quot;caveat&quot;: null,
+    &quot;solution&quot;: null,
+    &quot;incident_description&quot;: &quot;Nay tried to rob a gas station. He fled the scene and deputies caught up with him and he crashed at Broad River and Kennerly Road. He got into a standoff with officers and was shot.&quot;,
+    &quot;official_disposition_of_death&quot;: &quot;Pending investigation&quot;,
+    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
+    &quot;news_url&quot;: &quot;http://www.wltx.com/story/local/2013/07/20/1679546/&quot;,
+    &quot;mental_illness&quot;: &quot;No&quot;,
+    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
+    &quot;line_of_duty&quot;: &quot;Line of Duty&quot;,
+    &quot;note&quot;: null,
+    &quot;in_custody&quot;: null,
+    &quot;arrest_related_death&quot;: null,
+    &quot;unique_mpv&quot;: 607,
+    &quot;created_at&quot;: &quot;2015-11-22T00:50:24.657Z&quot;,
+    &quot;updated_at&quot;: &quot;2015-11-22T00:50:24.657Z&quot;,
+    &quot;latitude&quot;: &quot;34.101671&quot;,
+    &quot;longitude&quot;: &quot;-81.181117&quot;
+  },
+  {
+    &quot;id&quot;: 1555,
+    &quot;victim_name&quot;: &quot;Mohammad Abdulazeez&quot;,
+    &quot;victim_age&quot;: 24,
+    &quot;victim_gender&quot;: &quot;Male&quot;,
+    &quot;victim_race&quot;: &quot;Asian&quot;,
+    &quot;victim_image_url&quot;: null,
+    &quot;incident_date&quot;: &quot;2013-01-01&quot;,
+    &quot;incident_street_address&quot;: &quot;4051 Amnicola Hwy&quot;,
+    &quot;incident_city&quot;: &quot;Chattanooga&quot;,
+    &quot;incident_state&quot;: &quot;TN&quot;,
+    &quot;incident_zip&quot;: null,
+    &quot;incident_county&quot;: null,
+    &quot;agency_responsible&quot;: &quot;Chattanooga Police Department&quot;,
+    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
+    &quot;alleged_victim_crime&quot;: null,
+    &quot;crime_category&quot;: null,
+    &quot;aggregate_crime_category&quot;: null,
+    &quot;caveat&quot;: &quot;Firearm&quot;,
+    &quot;solution&quot;: null,
+    &quot;incident_description&quot;: null,
+    &quot;official_disposition_of_death&quot;: null,
+    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
+    &quot;news_url&quot;: null,
+    &quot;mental_illness&quot;: null,
+    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
+    &quot;line_of_duty&quot;: null,
+    &quot;note&quot;: null,
+    &quot;in_custody&quot;: null,
+    &quot;arrest_related_death&quot;: null,
+    &quot;unique_mpv&quot;: 617,
+    &quot;created_at&quot;: &quot;2015-11-22T00:50:24.662Z&quot;,
+    &quot;updated_at&quot;: &quot;2015-11-22T00:50:24.662Z&quot;,
+    &quot;latitude&quot;: &quot;34.733616&quot;,
+    &quot;longitude&quot;: &quot;-80.801105&quot;
+  },
+  {
+    &quot;id&quot;: 1552,
+    &quot;victim_name&quot;: &quot;Garrett Chruma&quot;,
+    &quot;victim_age&quot;: 21,
+    &quot;victim_gender&quot;: &quot;Male&quot;,
+    &quot;victim_race&quot;: &quot;Asian&quot;,
+    &quot;victim_image_url&quot;: &quot;https://usgunviolence.files.wordpress.com/2014/03/garett-chruma.jpg?w=625&quot;,
+    &quot;incident_date&quot;: &quot;2013-08-06&quot;,
+    &quot;incident_street_address&quot;: &quot;Mason Ferry Road&quot;,
+    &quot;incident_city&quot;: &quot;Wilmer&quot;,
+    &quot;incident_state&quot;: &quot;AL&quot;,
+    &quot;incident_zip&quot;: &quot;36587&quot;,
+    &quot;incident_county&quot;: &quot;Mobile&quot;,
+    &quot;agency_responsible&quot;: &quot;Alabama State Police&quot;,
+    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
+    &quot;alleged_victim_crime&quot;: null,
+    &quot;crime_category&quot;: null,
+    &quot;aggregate_crime_category&quot;: null,
+    &quot;caveat&quot;: null,
+    &quot;solution&quot;: null,
+    &quot;incident_description&quot;: &quot;Alabama State Troopers began a \&quot;short, high speed chase\&quot; of Garrett Chruma, 21, armed on motorcycle. The chase continued on foot, ended with a confrontation between officers in which Chruma was shot and killed, near Mason Ferry Road in Wilmer.The Alabama Bureau of Investigation (ABI) is conducting an investigation.&quot;,
+    &quot;official_disposition_of_death&quot;: &quot;Pending investigation&quot;,
+    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
+    &quot;news_url&quot;: &quot;http://www.abc3340.com/story/22548035/state-trooper-shoots-kills-suspect-after-chase-near-mobile&quot;,
+    &quot;mental_illness&quot;: &quot;No&quot;,
+    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
+    &quot;line_of_duty&quot;: &quot;Line of Duty&quot;,
+    &quot;note&quot;: null,
+    &quot;in_custody&quot;: null,
+    &quot;arrest_related_death&quot;: null,
+    &quot;unique_mpv&quot;: 457,
+    &quot;created_at&quot;: &quot;2015-11-22T00:50:24.648Z&quot;,
+    &quot;updated_at&quot;: &quot;2015-11-22T00:50:24.648Z&quot;,
+    &quot;latitude&quot;: &quot;30.8137&quot;,
+    &quot;longitude&quot;: &quot;-88.3332&quot;
+  },
+  {
+    &quot;id&quot;: 1551,
+    &quot;victim_name&quot;: &quot;Binh Van Nguyen&quot;,
+    &quot;victim_age&quot;: 39,
+    &quot;victim_gender&quot;: &quot;Male&quot;,
+    &quot;victim_race&quot;: &quot;Asian&quot;,
+    &quot;victim_image_url&quot;: &quot;http://media.nbcbayarea.com/images/01-bihnnguyen.JPG&quot;,
+    &quot;incident_date&quot;: &quot;2013-11-01&quot;,
+    &quot;incident_street_address&quot;: &quot;200 block North Maxine Street&quot;,
+    &quot;incident_city&quot;: &quot;Santa Ana&quot;,
+    &quot;incident_state&quot;: &quot;CA&quot;,
+    &quot;incident_zip&quot;: &quot;92703&quot;,
+    &quot;incident_county&quot;: &quot;Orange&quot;,
+    &quot;agency_responsible&quot;: &quot;Santa Ana Police Department&quot;,
+    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
+    &quot;alleged_victim_crime&quot;: null,
+    &quot;crime_category&quot;: null,
+    &quot;aggregate_crime_category&quot;: null,
+    &quot;caveat&quot;: null,
+    &quot;solution&quot;: null,
+    &quot;incident_description&quot;: &quot;Officers on patrol attempted to speak to a suspicious person in the back seat of a car. The suspect jumped into the front seat and drove towards the officers who then fatally shot him.&quot;,
+    &quot;official_disposition_of_death&quot;: &quot;Justified&quot;,
+    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
+    &quot;news_url&quot;: &quot;http://www.nbclosangeles.com/news/local/Man-Fatally-Shot-by-Santa-Ana-Police-is-Identified-186616081.html&quot;,
+    &quot;mental_illness&quot;: &quot;No&quot;,
+    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
+    &quot;line_of_duty&quot;: &quot;Line of Duty&quot;,
+    &quot;note&quot;: null,
+    &quot;in_custody&quot;: null,
+    &quot;arrest_related_death&quot;: null,
+    &quot;unique_mpv&quot;: 39,
+    &quot;created_at&quot;: &quot;2015-11-22T00:50:24.636Z&quot;,
+    &quot;updated_at&quot;: &quot;2015-11-22T00:50:24.636Z&quot;,
+    &quot;latitude&quot;: &quot;33.745989&quot;,
+    &quot;longitude&quot;: &quot;-117.93968&quot;
+  },
+  {
+    &quot;id&quot;: 1553,
+    &quot;victim_name&quot;: &quot;Christopher A. Fredette&quot;,
+    &quot;victim_age&quot;: 32,
+    &quot;victim_gender&quot;: &quot;Male&quot;,
+    &quot;victim_race&quot;: &quot;Asian&quot;,
+    &quot;victim_image_url&quot;: &quot;http://ak-cache.legacy.net/legacy/images/Cobrands/SanAntonio/Photos/2453076_245307620130704.jpg&quot;,
+    &quot;incident_date&quot;: null,
+    &quot;incident_street_address&quot;: &quot;5100 block Galahad Drive&quot;,
+    &quot;incident_city&quot;: &quot;San Antonio&quot;,
+    &quot;incident_state&quot;: &quot;TX&quot;,
+    &quot;incident_zip&quot;: &quot;78218&quot;,
+    &quot;incident_county&quot;: &quot;Bexar&quot;,
+    &quot;agency_responsible&quot;: &quot;San Antonio Police Department&quot;,
+    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
+    &quot;alleged_victim_crime&quot;: null,
+    &quot;crime_category&quot;: null,
+    &quot;aggregate_crime_category&quot;: null,
+    &quot;caveat&quot;: null,
+    &quot;solution&quot;: null,
+    &quot;incident_description&quot;: &quot;Officers called to the scene for a family disturbance, suspect was being aggressive towards his parents. Taken into yard by two officers, as they searched him, he pulls gun, fires it. Officer inside house ran out and fired.&quot;,
+    &quot;official_disposition_of_death&quot;: &quot;Justified&quot;,
+    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
+    &quot;news_url&quot;: &quot;http://www.kens5.com/story/news/local/2014/06/26/10480200/&quot;,
+    &quot;mental_illness&quot;: &quot;Unknown&quot;,
+    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
+    &quot;line_of_duty&quot;: &quot;Line of Duty&quot;,
+    &quot;note&quot;: null,
+    &quot;in_custody&quot;: null,
+    &quot;arrest_related_death&quot;: null,
+    &quot;unique_mpv&quot;: 535,
+    &quot;created_at&quot;: &quot;2015-11-22T00:50:24.653Z&quot;,
+    &quot;updated_at&quot;: &quot;2015-11-22T00:50:24.653Z&quot;,
+    &quot;latitude&quot;: &quot;29.50335&quot;,
+    &quot;longitude&quot;: &quot;-98.389034&quot;
+  }
+]</pre>
+      </div>
+    </div>
+  </body>
+</html>

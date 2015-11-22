@@ -61,6 +61,7 @@ group :development, :test do
   gem 'spring'
 
   gem 'rspec-rails'
+  gem 'rspec_api_documentation'
   gem 'capybara'
   gem 'launchy'
   gem 'jasmine'
