@@ -53,7 +53,7 @@ describe 'the dashboard' do
   it "shows the import from mpv button" do
     click_on 'Re-import MPV data'
     expect(page).to have_content('Upload')
-    attach_file "dump_file", "#{Rails.root}/spec/fixtures/test_data.csv"
+    attach_file "dump_file", "#{Rails.root}/spec/fixtures/mpv_test_data.csv"
 
     click_button('Submit')
     expect(page).to have_content('Incidents')

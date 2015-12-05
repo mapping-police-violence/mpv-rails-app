@@ -38,7 +38,7 @@ end
 describe 'MpvImporter' do
   describe '#import' do
     it 'imports the data correctly' do
-      MpvImporter.import 'spec/fixtures/test_data.csv'
+      MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
       expect(Incident.all.count).to eq 5
       check_common_imported_values
 
@@ -48,8 +48,8 @@ describe 'MpvImporter' do
     end
 
     it 'creates new incidents for novel unique_mpvs and updates existing unique_mpvs on re-import' do
-      MpvImporter.import 'spec/fixtures/test_data.csv'
-      MpvImporter.import 'spec/fixtures/revised_test_data.csv'
+      MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
+      MpvImporter.import 'spec/fixtures/mpv_test_data_revised.csv'
       expect(Incident.all.count).to eq 6
       check_common_imported_values
 

@@ -7,7 +7,7 @@ resource 'Incidents' do
   get '/api/v1/incidents' do
 
     before do
-      MpvImporter.import 'spec/fixtures/test_data.csv'
+      MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
     end
 
     example_request 'Getting a list of incidents' do
