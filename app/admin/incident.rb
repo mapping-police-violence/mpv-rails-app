@@ -74,7 +74,40 @@ ActiveAdmin.register Incident do
     end
     actions
     semantic_errors
+  end
 
+  csv do
+    column :victim_name
+    column :victim_age
+    column :victim_gender
+    column :victim_race
+    column :victim_image_url
+    column :incident_date
+    column :incident_street_address
+    column :incident_city
+    column :incident_state
+    column :incident_zip
+    column :incident_county
+    column :agency_responsible
+    column :cause_of_death
+    column :alleged_victim_crime
+    column :crime_category
+    column :aggregate_crime_category
+    column :caveat
+    column :solution
+    column :incident_description
+    column :official_disposition_of_death
+    column :criminal_charges
+    column :news_url
+    column :mental_illness
+    column :unarmed
+    column :line_of_duty
+    column :note
+    column :in_custody
+    column :arrest_related_death
+    column :unique_mpv
+    column :latitude
+    column :longitude
   end
 
   collection_action :upload_file do

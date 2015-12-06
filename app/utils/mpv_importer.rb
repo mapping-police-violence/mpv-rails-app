@@ -6,17 +6,17 @@ class MpvImporter < DataImporter
     # this ensures that no new unique_mpv values will be assigned until the existing ones
     # have been imported, avoiding conflicts.
     contents.sort_by! do |a|
-      missing = a.nil? || a[29].nil?
-      [missing ? 1 : 0, a[29]]
+      missing = a.nil? || a[28].nil?
+      [missing ? 1 : 0, a[28]]
     end
   end
 
   def self.is_valid(row)
-    !row[0].nil? && !(/Id/ =~ row[0] && /Victim name/ =~ row[1])
+    !row[0].nil? && !(/Victim name/ =~ row[0])
   end
 
   def self.import_row(row)
-    existing_incidents = Incident.where(:unique_mpv => row[29])
+    existing_incidents = Incident.where(:unique_mpv => row[28])
     if existing_incidents.empty?
       Incident.create!(incident_hash(row))
     else
@@ -26,37 +26,37 @@ class MpvImporter < DataImporter
 
   def self.incident_hash(row)
     {
-        :victim_name => row[1],
-        :victim_age => row[2],
-        :victim_gender => row[3],
-        :victim_race => row[4],
-        :victim_image_url => row[5],
-        :incident_date => row[6],
-        :incident_street_address => row[7],
-        :incident_city => row[8],
-        :incident_state => row[9],
-        :incident_zip => row[10],
-        :incident_county => row[11],
-        :agency_responsible => row[12],
-        :cause_of_death => row[13],
-        :alleged_victim_crime => row[14],
-        :crime_category => row[15],
-        :aggregate_crime_category => row[16],
-        :caveat => row[17],
-        :solution => row[18],
-        :incident_description => row[19],
-        :official_disposition_of_death => row[20],
-        :criminal_charges => row[21],
-        :news_url => row[22],
-        :mental_illness => row[23],
-        :unarmed => row[24],
-        :line_of_duty => row[25],
-        :note => row[26],
-        :in_custody => row[27],
-        :arrest_related_death => row[28],
-        :unique_mpv => row[29],
-        :latitude => row[32],
-        :longitude => row[33]
+        :victim_name => row[0],
+        :victim_age => row[1],
+        :victim_gender => row[2],
+        :victim_race => row[3],
+        :victim_image_url => row[4],
+        :incident_date => row[5],
+        :incident_street_address => row[6],
+        :incident_city => row[7],
+        :incident_state => row[8],
+        :incident_zip => row[9],
+        :incident_county => row[10],
+        :agency_responsible => row[11],
+        :cause_of_death => row[12],
+        :alleged_victim_crime => row[13],
+        :crime_category => row[14],
+        :aggregate_crime_category => row[15],
+        :caveat => row[16],
+        :solution => row[17],
+        :incident_description => row[18],
+        :official_disposition_of_death => row[19],
+        :criminal_charges => row[20],
+        :news_url => row[21],
+        :mental_illness => row[22],
+        :unarmed => row[23],
+        :line_of_duty => row[24],
+        :note => row[25],
+        :in_custody => row[26],
+        :arrest_related_death => row[27],
+        :unique_mpv => row[28],
+        :latitude => row[29],
+        :longitude => row[30]
     }
   end
 end
