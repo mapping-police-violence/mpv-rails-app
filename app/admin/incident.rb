@@ -1,11 +1,6 @@
 ActiveAdmin.register Incident do
 
-  permit_params :victim_name, :victim_age, :victim_gender, :victim_race, :victim_image_url, :incident_date,
-                :incident_street_address, :incident_city, :incident_state, :incident_zip, :incident_county,
-                :agency_responsible, :cause_of_death, :alleged_victim_crime, :crime_category, :aggregate_crime_category,
-                :caveat, :solution, :incident_description, :official_disposition_of_death, :criminal_charges,
-                :news_url, :mental_illness, :unarmed, :line_of_duty, :note, :in_custody, :arrest_related_death,
-                :unique_mpv, :latitude, :longitude
+  permit_params *Incident.permitted_params
 
 
   after_save do
@@ -77,37 +72,9 @@ ActiveAdmin.register Incident do
   end
 
   csv do
-    column :victim_name
-    column :victim_age
-    column :victim_gender
-    column :victim_race
-    column :victim_image_url
-    column :incident_date
-    column :incident_street_address
-    column :incident_city
-    column :incident_state
-    column :incident_zip
-    column :incident_county
-    column :agency_responsible
-    column :cause_of_death
-    column :alleged_victim_crime
-    column :crime_category
-    column :aggregate_crime_category
-    column :caveat
-    column :solution
-    column :incident_description
-    column :official_disposition_of_death
-    column :criminal_charges
-    column :news_url
-    column :mental_illness
-    column :unarmed
-    column :line_of_duty
-    column :note
-    column :in_custody
-    column :arrest_related_death
-    column :unique_mpv
-    column :latitude
-    column :longitude
+    Incident.permitted_params.each do |param|
+      column param
+    end
   end
 
   collection_action :upload_file do
