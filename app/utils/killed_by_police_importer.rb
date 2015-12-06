@@ -2,13 +2,18 @@ require 'csv'
 
 class KilledByPoliceImporter < DataImporter
 
-  def self.is_valid(row)
-    # whatever the dumb unlabeled column is, it's only present in valid rows
-    # so, check for the presence of that
-    !row[4].nil? && !row[4].empty?
+  def self.is_header(row)
+    row[0].include? '# since'
+  end
+
+  def self.expected_column_count
+    return 7
   end
 
   def self.import_row(row)
+    # whatever the dumb unlabeled column is, it's only present in valid rows
+    # so, check for the presence of that
+    return if(row[4].nil? || row[4].empty?)
 
     date = parse_date(row[0])
     news_url = parse_news_url(row[6])

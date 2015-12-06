@@ -2,8 +2,12 @@ require 'csv'
 
 class CountedImporter < DataImporter
 
-  def self.is_valid row
-    !row[0].nil? && row[0] != 'name'
+  def self.is_header row
+    row[0] == 'name'
+  end
+
+  def self.expected_column_count
+    return 13
   end
 
   def self.import_row row

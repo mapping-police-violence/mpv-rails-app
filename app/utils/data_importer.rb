@@ -20,8 +20,14 @@ class DataImporter
     end
 
     preprocess_contents(contents)
-    contents.each do |row|
-      next if !is_valid(row)
+    contents.each_with_index do |row, index|
+      next if row.nil? || row.count == 0 || is_header(row)
+
+      if row.count != expected_column_count
+        raise "This file does not have the expected number of columns at row #{index}
+          (expected: #{expected_column_count}, actual: #{row.count})"
+      end
+
       import_row(row)
     end
   end
@@ -30,11 +36,15 @@ class DataImporter
     # no preprocessing required by default
   end
 
-  def self.is_valid row
+  def self.is_header row
     raise 'unimplemented'
   end
 
   def self.import_row row
+    raise 'unimplemented'
+  end
+
+  def self.expected_column_count
     raise 'unimplemented'
   end
 end

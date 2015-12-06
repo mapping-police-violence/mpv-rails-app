@@ -11,8 +11,12 @@ class MpvImporter < DataImporter
     end
   end
 
-  def self.is_valid(row)
-    !row[0].nil? && !(/Victim name/ =~ row[0])
+  def self.is_header(row)
+    /Victim name/ =~ row[0]
+  end
+
+  def self.expected_column_count
+    return 31
   end
 
   def self.import_row(row)

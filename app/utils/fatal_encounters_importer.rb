@@ -2,8 +2,12 @@ require 'csv'
 
 class FatalEncountersImporter < DataImporter
 
-  def self.is_valid row
-    !row[0].nil? && row[0] != 'Timestamp'
+  def self.is_header row
+    row[0] == 'Timestamp'
+  end
+
+  def self.expected_column_count
+    return 23
   end
 
   def self.import_row row
