@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 def check_common_imported_values
-  second_incident = Incident.second
+  second_incident = Incident.where(:victim_name => "Garrett Chruma").first
   expect(second_incident.victim_name).to eq "Garrett Chruma"
   expect(second_incident.victim_gender).to eq "Male"
   expect(second_incident.victim_race).to eq "Asian"
@@ -29,10 +29,10 @@ def check_common_imported_values
   expect(second_incident.latitude).to eq BigDecimal.new(30.8137, 10)
   expect(second_incident.longitude).to eq BigDecimal.new(-88.3332, 10)
 
-  expect(Incident.first.unique_mpv).to eq 39
-  expect(Incident.third.unique_mpv).to eq 535
-  expect(Incident.fourth.unique_mpv).to eq 607
-  expect(Incident.fifth.unique_mpv).to eq 608
+  expect(Incident.where(:victim_name => "Binh Van Nguyen").first.unique_mpv).to eq 39
+  expect(Incident.where(:victim_name => "Christopher A. Fredette").first.unique_mpv).to eq 535
+  expect(Incident.where(:victim_name => "Kong Nay").first.unique_mpv).to eq 607
+  expect(Incident.where(:victim_name => "Mohammad Abdulazeez").first.unique_mpv).to eq 608
 end
 
 describe 'MpvImporter' do
@@ -42,7 +42,7 @@ describe 'MpvImporter' do
       expect(Incident.all.count).to eq 5
       check_common_imported_values
 
-      second_incident = Incident.second
+      second_incident = Incident.where(:victim_name => "Garrett Chruma").first
       expect(second_incident.victim_age).to eq 21
       expect(second_incident.incident_date).to eq Date.parse("6/8/2013")
     end
@@ -53,7 +53,7 @@ describe 'MpvImporter' do
       expect(Incident.all.count).to eq 6
       check_common_imported_values
 
-      second_incident = Incident.second
+      second_incident = Incident.where(:victim_name => "Garrett Chruma").first
       expect(second_incident.victim_age).to eq 24
       expect(second_incident.incident_date).to eq Date.parse("7/8/2013")
       expect(Incident.where(:victim_name => 'Don White').first.unique_mpv).to eq 988
