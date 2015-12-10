@@ -30,15 +30,20 @@ def check_common_imported_values
   expect(second_incident.longitude).to eq BigDecimal.new(-88.3332, 10)
 
   expect(Incident.where(:victim_name => "Binh Van Nguyen").first.unique_mpv).to eq 39
-  expect(Incident.where(:victim_name => "Christopher A. Fredette").first.unique_mpv).to eq 535
+  expect(Incident.where(:victim_name => "Christopher A. Fredette").first.unique_mpv).to eq 608
   expect(Incident.where(:victim_name => "Kong Nay").first.unique_mpv).to eq 607
-  expect(Incident.where(:victim_name => "Mohammad Abdulazeez").first.unique_mpv).to eq 608
+
+  # this is the person with the blank unique_mpv. if the entries are imported in the wrong
+  # order, he'll be assigned 608, and then the subsequent entry with unique_mpv 608 will be treated
+  # as an edit to an existing entry rather than a new entry.
+  expect(Incident.where(:victim_name => "Mohammad Abdulazeez").first.unique_mpv).to eq 609
 end
 
 describe 'MpvImporter' do
   describe '#import' do
     it 'imports the data correctly' do
       MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
+      # if this fails and the count is 1 short, see above comment
       expect(Incident.all.count).to eq 5
       check_common_imported_values
 
@@ -50,6 +55,7 @@ describe 'MpvImporter' do
     it 'creates new incidents for novel unique_mpvs and updates existing unique_mpvs on re-import' do
       MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
       MpvImporter.import 'spec/fixtures/mpv_test_data_revised.csv'
+      # if this fails and the count is 1 short, see above comment
       expect(Incident.all.count).to eq 6
       check_common_imported_values
 
