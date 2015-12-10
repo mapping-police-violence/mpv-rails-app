@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150920220534) do
+ActiveRecord::Schema.define(version: 20151205232533) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,10 +79,19 @@ ActiveRecord::Schema.define(version: 20150920220534) do
     t.text     "in_custody"
     t.text     "arrest_related_death"
     t.integer  "unique_mpv"
-    t.datetime "created_at",                                             null: false
-    t.datetime "updated_at",                                             null: false
-    t.decimal  "latitude",                      precision: 10, scale: 6
-    t.decimal  "longitude",                     precision: 10, scale: 6
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+    t.decimal  "latitude",                           precision: 10, scale: 6
+    t.decimal  "longitude",                          precision: 10, scale: 6
+    t.string   "within_city_limits"
+    t.string   "officers_involved"
+    t.string   "race_of_officers_involved"
+    t.string   "gender_of_officers_involved"
+    t.string   "notes_related_to_officers_involved"
+    t.integer  "sort_order"
+    t.decimal  "unique_identifier"
+    t.string   "suspect_weapon_type"
+    t.string   "notes_related_to_officer_involved"
   end
 
   add_index "incidents", ["unique_mpv"], name: "index_incidents_on_unique_mpv", unique: true, using: :btree
