@@ -58,7 +58,7 @@ describe 'the dashboard' do
     click_button('Submit')
     expect(page).to have_content('Incidents')
     expect(page).to have_content('Garrett Chruma')
-    expect(page.all('tr').size).to be 6
+    expect(page.all('tr').size).to be 7
   end
 
 end

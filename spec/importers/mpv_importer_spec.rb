@@ -44,7 +44,7 @@ describe 'MpvImporter' do
     it 'imports CSV data correctly' do
       MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
       # if this fails and the count is 1 short, see above comment
-      expect(Incident.all.count).to eq 5
+      expect(Incident.all.count).to eq 6
       check_common_imported_values
 
       second_incident = Incident.where(:victim_name => "Garrett Chruma").first
@@ -56,7 +56,7 @@ describe 'MpvImporter' do
       MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
       MpvImporter.import 'spec/fixtures/mpv_test_data_revised.csv'
       # if this fails and the count is 1 short, see above comment
-      expect(Incident.all.count).to eq 6
+      expect(Incident.all.count).to eq 7
       check_common_imported_values
 
       second_incident = Incident.where(:victim_name => "Garrett Chruma").first
