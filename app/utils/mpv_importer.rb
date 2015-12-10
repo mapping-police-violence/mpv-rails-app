@@ -1,15 +1,6 @@
 require 'csv'
 
 class MpvImporter < DataImporter
-  def self.preprocess_contents contents
-    # sort consecutively by unique_mpv, with entries with missing values at the end.
-    # this ensures that no new unique_mpv values will be assigned until the existing ones
-    # have been imported, avoiding conflicts.
-    contents.sort_by! do |a|
-      missing = a.nil? || a[36].nil?
-      [missing ? 1 : 0, a[36]]
-    end
-  end
 
   def self.is_header(row)
     /Victim name/ =~ row[0]
@@ -17,6 +8,24 @@ class MpvImporter < DataImporter
 
   def self.expected_column_count
     return 39
+  end
+
+  def self.import_rows(contents)
+    # first pass: only import entries that already have unique_mpvs.
+    # this ensures that no new unique_mpv values will be assigned until the existing ones
+    # have been imported, avoiding conflicts.
+    entries_missing_unique_mpv = []
+    contents.each_with_index do |row, index|
+      next if !is_valid(row, index)
+      if row[36].nil?
+        entries_missing_unique_mpv.append(row)
+      else
+        import_row(row)
+      end
+    end
+
+    # second pass: import the remaining entries
+    super entries_missing_unique_mpv
   end
 
   def self.import_row(row)

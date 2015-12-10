@@ -41,7 +41,7 @@ end
 
 describe 'MpvImporter' do
   describe '#import' do
-    it 'imports the data correctly' do
+    it 'imports CSV data correctly' do
       MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
       # if this fails and the count is 1 short, see above comment
       expect(Incident.all.count).to eq 5
@@ -63,6 +63,17 @@ describe 'MpvImporter' do
       expect(second_incident.victim_age).to eq 24
       expect(second_incident.incident_date).to eq Date.parse("7/8/2013")
       expect(Incident.where(:victim_name => 'Don White').first.unique_mpv).to eq 988
+    end
+
+    it 'imports XLSX data' do
+      MpvImporter.import 'spec/fixtures/mpv_test_data.xlsx'
+      expect(Incident.all.count).to eq 5
+
+      expect(Incident.where(:victim_name => "Garrett Chruma").first.unique_mpv).to eq 457
+      expect(Incident.where(:victim_name => "Binh Van Nguyen").first.unique_mpv).to eq 39
+      expect(Incident.where(:victim_name => "Christopher A. Fredette").first.unique_mpv).to eq 608
+      expect(Incident.where(:victim_name => "Kong Nay").first.unique_mpv).to eq 607
+      expect(Incident.where(:victim_name => "Mohammad Abdulazeez").first.unique_mpv).to eq 609
     end
   end
 
