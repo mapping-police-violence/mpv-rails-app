@@ -3,7 +3,16 @@ require 'csv'
 class MpvImporter < DataImporter
 
   def self.is_header(row)
-    /Victim name/ =~ row[0]
+    if row[1].respond_to? :downcase
+      first = row[0].downcase
+      second = row[1].downcase
+
+      # header text capitalization and punctuation varies slightly from version to version
+      # (e.g. "Victim Name" vs "Victim's name")
+      /victim/ =~ first && /victim/ =~ second && /name/ =~ first && /age/ =~ second
+    else
+      false
+    end
   end
 
   def self.expected_column_count
