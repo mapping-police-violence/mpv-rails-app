@@ -60,8 +60,12 @@ describe 'MpvImporter' do
       check_common_imported_values
 
       second_incident = Incident.where(:victim_name => "Garrett Chruma").first
+      # most data is updated to match contents of revised file
       expect(second_incident.victim_age).to eq 24
       expect(second_incident.incident_date).to eq Date.parse("7/8/2013")
+      # latitude and longitude are not updated to match contents of revised file
+      expect(second_incident.latitude).to eq BigDecimal.new(30.8137, 10) # blank in file
+      expect(second_incident.longitude).to eq BigDecimal.new(-88.3332, 10) # 0 in file
       expect(Incident.where(:victim_name => 'Don White').first.unique_mpv).to eq 988
     end
 

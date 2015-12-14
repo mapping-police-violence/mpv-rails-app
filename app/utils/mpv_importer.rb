@@ -42,7 +42,12 @@ class MpvImporter < DataImporter
     if existing_incidents.empty?
       Incident.create!(incident_hash(row))
     else
-      existing_incidents.first.update_attributes!(incident_hash(row))
+      new_data = incident_hash(row)
+      # don't overwrite existing latitude/longitude, since we auto-geocode all new entries
+      [:latitude, :longitude].each do |key|
+        new_data.delete(key)
+      end
+      existing_incidents.first.update_attributes!(new_data)
     end
   end
 
