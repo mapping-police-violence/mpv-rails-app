@@ -13,7 +13,7 @@ class KilledByPoliceImporter < DataImporter
   def self.import_row(row)
     # whatever the dumb unlabeled column is, it's only present in valid rows
     # so, check for the presence of that
-    return if(row[4].nil? || row[4].empty?)
+    return if (row[4].nil? || row[4].empty?)
 
     date = parse_date(row[0])
     news_url = parse_news_url(row[6])
@@ -24,7 +24,7 @@ class KilledByPoliceImporter < DataImporter
     if !row[3].nil? && (row[3].include? "\n")
       name_and_age_rows = row[3].split("\n")
     else
-      name_and_age_rows = [ row[3] ]
+      name_and_age_rows = [row[3]]
     end
 
     (0..name_and_age_rows.length-1).each do |i|
@@ -41,16 +41,26 @@ class KilledByPoliceImporter < DataImporter
     parsed_data = parse_race_and_gender(race_and_gender)
     parsed_data.merge!(parse_name_and_age(name_and_age))
 
-    Incident.create!({
-                                    :incident_date => date,
-                                    :incident_state => state,
-                                    :victim_gender => parsed_data[:gender],
-                                    :victim_race => parsed_data[:race],
-                                    :victim_name => parsed_data[:name],
-                                    :victim_age => parsed_data[:age],
-                                    :victim_image_url => parsed_data[:image_link],
-                                    :news_url => news_url
-                                })
+    duplicate_entries = Incident.where(:victim_name => parsed_data[:name], :incident_date => date-3.days..date+3.days)
+
+    if (duplicate_entries.count > 0)
+      duplicate_entries.first.update!(
+          :victim_image_url => parsed_data[:image_link],
+          :news_url => news_url
+      )
+    else
+      Incident.create!({
+                           :incident_date => date,
+                           :incident_state => state,
+                           :victim_gender => parsed_data[:gender],
+                           :victim_race => parsed_data[:race],
+                           :victim_name => parsed_data[:name],
+                           :victim_age => parsed_data[:age],
+                           :victim_image_url => parsed_data[:image_link],
+                           :news_url => news_url
+                       })
+    end
+
   end
 
   def self.parse_date input
@@ -60,7 +70,7 @@ class KilledByPoliceImporter < DataImporter
     if input != nil
       parsed_date = input.gsub /\(.*\)/, ''
     end
-    parsed_date.split("\n")[0]
+    Date.parse(parsed_date.split("\n")[0])
   end
 
   def self.parse_name_and_age(input)
@@ -81,7 +91,6 @@ class KilledByPoliceImporter < DataImporter
     end
     parsed_input
   end
-
 
 
   def self.parse_race_and_gender(input)

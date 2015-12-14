@@ -82,6 +82,40 @@ describe 'KilledByPoliceImporter' do
 
 
     end
+
+    it 'updates victim image and news url fields for existing entries with the same name and date within 3 days' do
+      Incident.create(
+          :victim_name => 'Kobvey Igbuhay',
+          :victim_age => 21,
+          :victim_gender => 'Female',
+          :victim_race => 'Black',
+          :victim_image_url => 'http://badurl.jpg',
+          :incident_state => 'LA',
+          :incident_date => Date.parse("29/10/2015"),
+          :news_url => 'http://fakenews.com',
+      )
+
+      Incident.create(
+          :victim_name => 'Garrett Gagne',
+          :incident_date => Date.parse("2014/12/28")
+      )
+
+      file = File.new('spec/fixtures/killed_by_police_data.xlsx')
+      KilledByPoliceImporter.import file
+      expect(Incident.all.count).to eq 13
+
+      expect(Incident.where(:victim_name => 'Garrett Gagne').count).to eq 2
+
+      expect(Incident.where(:victim_name => 'Kobvey Igbuhay').count).to eq 1
+      first_incident = Incident.where(:victim_name => 'Kobvey Igbuhay').first
+      expect(first_incident.victim_age).to eq 21
+      expect(first_incident.victim_gender).to eq 'Female'
+      expect(first_incident.victim_race).to eq 'Black'
+      expect(first_incident.victim_image_url).to eq 'http://www.killedbypolice.net/victims/150979.jpg'
+      expect(first_incident.incident_state).to eq 'LA'
+      expect(first_incident.incident_date).to eq Date.parse("29/10/2015")
+      expect(first_incident.news_url).to eq 'http://www.tampabay.com/news/publicsafety/crime/one-suspect-shot-two-in-custody-and-tampa-police-hunting-for-a-fourth/2251265'
+    end
   end
 
 end
