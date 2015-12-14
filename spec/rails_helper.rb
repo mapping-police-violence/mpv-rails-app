@@ -70,3 +70,7 @@ RSpec.configure do |config|
     )
   end
 end
+
+RspecApiDocumentation.configure do |config|
+  config.docs_dir = Rails.root.join("public", "doc")
+end
