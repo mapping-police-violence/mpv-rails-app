@@ -6,7 +6,7 @@ describe 'FatalEncountersImporter' do
     before do
       stub_geocoding_request('18th Street and Collins Avenue, Miami Beach, FL, 33139', 37.79951, -122.274911)
     end
-    
+
     it 'imports CSV data correctly' do
       UniqueMpvSeq.create(:last_value => 5)
 
@@ -72,6 +72,40 @@ describe 'FatalEncountersImporter' do
       expect(first_incident.victim_age).to eq 37
       expect(first_incident.victim_gender).to eq 'Male'
       expect(first_incident.victim_race).to eq 'Unknown Race'
+    end
+
+    it 'handles duplicate entries by populating all data that does not already exist' do
+      Incident.create(:victim_name => "Raymond Herisse",
+                      :incident_date => "May 29, 2011",
+                      :victim_race => "White",
+                      :official_disposition_of_death => "wrongful"
+      )
+
+      Incident.create(:victim_name => "Filimoni Raiyawa",
+                      :incident_date => "August 18, 2015",
+      )
+      file = File.new('spec/fixtures/fatal_encounters_data.csv')
+      FatalEncountersImporter.import file
+      expect(Incident.all.count).to eq 8
+
+      expect(Incident.where(:victim_name => 'Filimoni Raiyawa').count).to eq 2
+      expect(Incident.where(:victim_name => 'Raymond Herisse').count).to eq 1
+      first_incident = Incident.where(:victim_name => "Raymond Herisse").first
+
+      expect(first_incident.victim_age).to eq 22
+      expect(first_incident.victim_gender).to eq "Male"
+      expect(first_incident.victim_race).to eq "White"
+      expect(first_incident.victim_image_url).to eq "http://graphics8.nytimes.com/images/2013/08/04/us/MIAMI/MIAMI-popup.jpg"
+      expect(first_incident.incident_date).to eq Date.parse("2011/05/29")
+      expect(first_incident.incident_street_address).to eq "18th Street and Collins Avenue"
+      expect(first_incident.incident_city).to eq "Miami Beach"
+      expect(first_incident.incident_state).to eq "FL"
+      expect(first_incident.incident_zip).to eq "33139"
+      expect(first_incident.incident_county).to eq "Miami-Dade"
+      expect(first_incident.agency_responsible).to eq "Miami Beach Police Department"
+      expect(first_incident.official_disposition_of_death).to eq "wrongful"
+      expect(first_incident.news_url).to eq "http://www.miamiherald.com/2013/04/10/3336557/lab-report-man-slain-in-wild-sobe.html#storylink=cpy"
+      expect(first_incident.incident_description).to eq "Police tried to stop Herisse’s speeding four-door Hyundai as it barreled down a crowded Collins Avenue."
     end
   end
 end
