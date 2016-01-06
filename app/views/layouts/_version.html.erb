@@ -6,7 +6,7 @@
         <%= @versions[(params[:version].to_i - 1)].created_at %>
         <br>
         <b>By</b>:
-        <%= AdminUser.find(@versions[(params[:version].to_i - 1)].whodunnit).email %>
+        <%= AdminUser.get_display_name(@versions[(params[:version].to_i - 1)].whodunnit) %>
         <br>
     <% else %>
         <h3>This is the latest version</h3>
@@ -15,25 +15,28 @@
         <%= @versions.last.created_at %>
         <br>
         <b>By</b>:
-        <%= @versions.last.whodunnit ? AdminUser.find(@versions.last.whodunnit).email : 'Unknown user' %>
+        <%= AdminUser.get_display_name(@versions.last.whodunnit) %>
         <br>
     <% end %>
 
-    <br>&nbsp;<br>
-    <h3>Other versions:</h3>
-    <ul>
-      <% @versions.reverse.each do |version| %>
-          <li>
-            <% if version.id == @versions.length %>
-                <%= link_to "Latest" %>
-            <% else %>
-                <%= link_to "Version #{version[:id].to_i}", {:version => version} %>
-            <% end %>
-          </li>
-      <% end %>
-    </ul>
+    <% if @versions.length > 1 %>
+        <br>&nbsp;<br>
+        <h3>Other versions:</h3>
+        <ul>
+          <% (1..@versions.length).reverse_each do |version_number| %>
+              <% next if version_number == params[:version].to_i || params[:version].nil? && version_number == @versions.length %>
+              <li>
+                <% if version_number == @versions.length %>
+                    <%= link_to "Latest" %>
+                <% else %>
+                    <%= link_to "Version #{version_number}", {:version => version_number} %>
+                <% end %>
+              </li>
+          <% end %>
+        </ul>
+        <%= link_to "View History", history_admin_incident_url(@incident) %>
+    <% end %>
 
-    <%= link_to "View History", history_admin_incident_url(@incident) %>
 <% else %>
     <p>This item does not have any registered versions.</p>
 <% end %>

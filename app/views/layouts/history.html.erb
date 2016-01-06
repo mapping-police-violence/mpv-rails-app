@@ -1,11 +1,12 @@
 <ul>
-  <% @versions.reverse.each do |version| %>
-      <li>
-        Version <%= version.id %>, modified at <%= version.created_at %>,
-        by <%= AdminUser.find(version.whodunnit).email %>
-      </li>
-      <pre>
+  <% @versions.reverse.each_with_index do |version, index| %>
+      <% version_number = @versions.length - index %>
+      <li id="<%= "diff-version-#{version_number}" %>">
+        Version <%= version_number %>, modified at <%= version.created_at %>,
+        by <%= AdminUser.get_display_name(version.whodunnit) %>
+        <pre>
         <%= version.object_changes %>
-      </pre>
+        </pre>
+      </li>
   <% end %>
 </ul>
