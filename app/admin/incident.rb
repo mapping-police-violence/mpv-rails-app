@@ -14,6 +14,17 @@ ActiveAdmin.register Incident do
                   :format => :json
   end
 
+  controller do
+    def show
+      @incident = Incident.includes(versions: :item).find(params[:id])
+      @versions = @incident.versions
+      @incident = @incident.versions[params[:version].to_i].reify if params[:version]
+      show! #it seems to need this
+    end
+  end
+
+  sidebar :versions, :partial => "layouts/version", :only => :show
+
   index do
     selectable_column
     column 'Name' do |incident|
@@ -93,6 +104,12 @@ ActiveAdmin.register Incident do
     end
 
     redirect_to :action => :index, :notice => 'File imported successfully!'
+  end
+
+  member_action :history do
+    @incident = Incident.find(params[:id])
+    @versions = @incident.versions
+    render "layouts/history"
   end
 
 end

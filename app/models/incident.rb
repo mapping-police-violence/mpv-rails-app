@@ -1,5 +1,7 @@
 class Incident < ActiveRecord::Base
 
+  has_paper_trail
+
   before_create :generate_unique_mpv
 
   @@last_geocode_time = nil
@@ -28,6 +30,10 @@ class Incident < ActiveRecord::Base
      incident_city,
      incident_state,
      incident_zip].reject(&:nil?).join(', ')
+  end
+
+  def admin_permalink
+    admin_incident_path(self)
   end
 
   def self.permitted_params
@@ -125,6 +131,10 @@ class Incident < ActiveRecord::Base
   def self.criminal_charges_options
     ['No Known Charges',
      'Charged with Crime']
+  end
+
+  def to_s
+    victim_name
   end
 
   private

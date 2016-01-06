@@ -61,4 +61,18 @@ describe 'the dashboard' do
     expect(page.all('tr').size).to be 7
   end
 
+  it "shows the versions table" do
+    incident = Incident.create(
+        :victim_name => 'Bob Foo',
+        :incident_city => 'Oakland',
+        :incident_state => 'CA',
+        :incident_zip => '94607'
+    )
+
+    incident.update_attributes(incident_city: 'Berkeley')
+    visit '/admin'
+    expect(page).to have_content 'Recently updated content'
+    expect(page).to have_content 'Bob Foo'
+  end
+
 end

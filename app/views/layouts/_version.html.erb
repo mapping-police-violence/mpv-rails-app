@@ -1,0 +1,39 @@
+<% if !@versions.empty? %>
+    <% if params[:version] %>
+        <h3>This is version <%= "#{params[:version]}" %></h3>
+
+        <b>Modified at:</b>
+        <%= @versions[(params[:version].to_i - 1)].created_at %>
+        <br>
+        <b>By</b>:
+        <%= AdminUser.find(@versions[(params[:version].to_i - 1)].whodunnit).email %>
+        <br>
+    <% else %>
+        <h3>This is the latest version</h3>
+
+        <b>Modified at:</b>
+        <%= @versions.last.created_at %>
+        <br>
+        <b>By</b>:
+        <%= @versions.last.whodunnit ? AdminUser.find(@versions.last.whodunnit).email : 'Unknown user' %>
+        <br>
+    <% end %>
+
+    <br>&nbsp;<br>
+    <h3>Other versions:</h3>
+    <ul>
+      <% @versions.reverse.each do |version| %>
+          <li>
+            <% if version.id == @versions.length %>
+                <%= link_to "Latest" %>
+            <% else %>
+                <%= link_to "Version #{version[:id].to_i}", {:version => version} %>
+            <% end %>
+          </li>
+      <% end %>
+    </ul>
+
+    <%= link_to "View History", history_admin_incident_url(@incident) %>
+<% else %>
+    <p>This item does not have any registered versions.</p>
+<% end %>

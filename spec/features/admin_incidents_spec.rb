@@ -25,5 +25,10 @@ describe 'the incidents page' do
       expect(page).to have_content line
     end
   end
+
+  it 'shows the incident version information' do
+    click_link 'Mohammad Abdulazeez'
+    expect(page).to have_content 'This is the latest version'
+  end
 end
 

@@ -1,0 +1,11 @@
+<ul>
+  <% @versions.reverse.each do |version| %>
+      <li>
+        Version <%= version.id %>, modified at <%= version.created_at %>,
+        by <%= AdminUser.find(version.whodunnit).email %>
+      </li>
+      <pre>
+        <%= version.object_changes %>
+      </pre>
+  <% end %>
+</ul>
