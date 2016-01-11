@@ -75,4 +75,10 @@ describe 'the dashboard' do
     expect(page).to have_content 'Bob Foo'
   end
 
+  it 'has a button to go to the CSV download page' do
+    click_on 'Download CSV'
+    expect(page).to have_content('Download')
+    expect(page).to have_content('Entries after')
+  end
+
 end

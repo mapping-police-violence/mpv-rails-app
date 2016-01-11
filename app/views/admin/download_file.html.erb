@@ -1,0 +1,7 @@
+<form method="GET" action="/admin/incidents.csv">
+  <label for="date-input">Entries after:</label>
+  <input type="hidden" name="order" value="id_desc" />
+  <input type="hidden" name="utf8" value="✓" />
+  <input name="q[created_at_gteq]" id="date-input" class="datepicker"/>
+  <input type="submit" value="Download">
+</form>

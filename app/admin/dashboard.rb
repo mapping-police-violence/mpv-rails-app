@@ -19,6 +19,9 @@ ActiveAdmin.register_page 'Dashboard' do
         span class: 'dashboard_button' do
           link_to 'Re-import MPV data', :controller => 'admin/incidents', :action => 'upload_file', :type => 'mpv'
         end
+        span class: 'dashboard_button' do
+          link_to 'Download CSV', :controller => 'admin/incidents', :action => 'download_file'
+        end
       end
     end
 

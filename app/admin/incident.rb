@@ -88,6 +88,10 @@ ActiveAdmin.register Incident do
     end
   end
 
+  collection_action :download_file do
+    render 'admin/download_file'
+  end
+
   collection_action :upload_file do
     render 'admin/upload_file'
   end
