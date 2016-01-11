@@ -1,0 +1,11 @@
+---
+applications:
+- name: mpv-production
+  buildpack: ruby_buildpack
+  command: bundle exec rake db:migrate && bundle exec rails s -p $PORT
+  env:
+    RAILS_ENV: production
+    RAILS_SERVE_STATIC_FILES: true
+  services:
+     - mpv-db-production
+     - mpv-redis-production
