@@ -14,13 +14,13 @@ Rails.application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
-  rediscloud_service = JSON.parse(ENV['VCAP_SERVICES'])["rediscloud"]
-  credentials = rediscloud_service.first["credentials"]
-  config.cache_store = :redis_store, { :host => credentials["hostname"],
-                                       :port => credentials["port"],
-                                       :db => 0,
-                                       :password => credentials["password"],
-                                       :namespace => "cache-staging" }
+  # rediscloud_service = JSON.parse(ENV['VCAP_SERVICES'])["rediscloud"]
+  # credentials = rediscloud_service.first["credentials"]
+  # config.cache_store = :redis_store, { :host => credentials["hostname"],
+  #                                      :port => credentials["port"],
+  #                                      :db => 0,
+  #                                      :password => credentials["password"],
+  #                                      :namespace => "cache-staging" }
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
   # Add `rack-cache` to your Gemfile before enabling this.
