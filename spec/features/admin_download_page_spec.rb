@@ -9,6 +9,35 @@ describe 'the download page' do
     click_button "Login"
   end
 
+  it 'allows users to download all entries that need review' do
+    needs_review = Incident.create!(:victim_name => 'Needs Review')
+    does_not_need_review = Incident.create!(:needs_review => false,
+                                            :victim_name => 'Reviewed Already')
+    check('Only incidents that need review')
+    click_button 'Download'
+
+    header = page.response_headers['Content-Disposition']
+    expect(header).to match /^attachment/
+    expect(header).to match /filename="incidents-.+\.csv"$/
+
+    expect(page).to have_content('Needs Review')
+    expect(page).not_to have_content('Reviewed Already')
+  end
+
+  it 'downloads everything when no filter options are selected' do
+    needs_review = Incident.create!(:victim_name => 'Needs Review')
+    does_not_need_review = Incident.create!(:needs_review => false,
+                                            :victim_name => 'Reviewed Already')
+    click_button 'Download'
+
+    header = page.response_headers['Content-Disposition']
+    expect(header).to match /^attachment/
+    expect(header).to match /filename="incidents-.+\.csv"$/
+
+    expect(page).to have_content('Needs Review')
+    expect(page).to have_content('Reviewed Already')
+  end
+
   it ('allows users to download entries after a given date') do
 
     Incident.create!({

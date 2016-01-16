@@ -1,7 +1,14 @@
 <form method="GET" action="/admin/incidents.csv">
-  <label for="date-input">Entries after:</label>
-  <input type="hidden" name="order" value="id_desc" />
-  <input type="hidden" name="utf8" value="✓" />
-  <input name="q[created_at_gteq]" id="date-input" class="datepicker"/>
+  <label for="date-input" class="download-label">Entries after:</label>
+  <br>
+  <input type="hidden" name="order" value="id_desc">
+  <input type="hidden" name="utf8" value="✓">
+  <input name="q[created_at_gteq]" id="date-input" class="datepicker download">
+  <br>
+  <div>
+    <input name="q[needs_review_eq]" type="checkbox" id="checkbox" value="true" class="download-checkbox">
+    <label for="checkbox" class="download-label">Only incidents that need review</label>
+  </div>
+  <br>
   <input type="submit" value="Download">
 </form>
