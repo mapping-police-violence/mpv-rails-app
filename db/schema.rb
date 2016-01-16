@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160111020859) do
+ActiveRecord::Schema.define(version: 20160116035405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -91,6 +91,7 @@ ActiveRecord::Schema.define(version: 20160111020859) do
     t.integer  "sort_order"
     t.decimal  "unique_identifier"
     t.text     "suspect_weapon_type"
+    t.boolean  "needs_review"
   end
 
   add_index "incidents", ["unique_mpv"], name: "index_incidents_on_unique_mpv", unique: true, using: :btree

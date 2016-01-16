@@ -3,6 +3,9 @@ class Incident < ActiveRecord::Base
   has_paper_trail
 
   before_create :generate_unique_mpv
+  after_initialize do
+    self.needs_review = true if self.needs_review.nil?
+  end
 
   @@last_geocode_time = nil
   MAX_GEOCODE_CALLS_PER_SECOND = 10  # google API limit

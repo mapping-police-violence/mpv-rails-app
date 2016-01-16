@@ -2,6 +2,19 @@ require 'rails_helper'
 include GeocodingHelpers
 
 describe 'Incident' do
+  describe 'needs review flag' do
+    it 'defaults to true if not explicitly set on initialization' do
+      incident = Incident.create()
+      expect(incident.needs_review).to eq true
+    end
+
+    it 'stays false when explicitly initialized to false' do
+      incident = Incident.create(
+          needs_review: false
+      )
+      expect(incident.needs_review).to eq false
+    end
+  end
   describe 'geocoding' do
     context 'with a full street address' do
       let(:subject) { Incident.create(
