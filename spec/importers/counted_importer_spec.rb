@@ -8,10 +8,18 @@ describe 'CountedImporter' do
       stub_geocoding_request('39 N Marlin Ave, Key Largo, FL', 37.79951, -122.274911)
     end
 
-    it 'imports the data correctly' do
+    it 'imports CSV data correctly' do
+      test_file_import('spec/fixtures/the_counted_data.csv')
+    end
+
+    it 'imports XLSX data correctly' do
+      test_file_import('spec/fixtures/the_counted_data.xlsx')
+    end
+
+    def test_file_import(path)
       UniqueMpvSeq.create(:last_value => 5)
 
-      file = File.new('spec/fixtures/the_counted_data.csv')
+      file = File.new(path)
       CountedImporter.import file
       expect(Incident.all.count).to eq 4
 

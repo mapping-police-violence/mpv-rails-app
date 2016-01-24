@@ -44,7 +44,7 @@ class CountedImporter < DataImporter
   end
 
   def self.parse_date(month, day, year)
-    Date.parse("#{month} #{day}, #{year}")
+    Date.parse("#{month} #{day.to_i}, #{year.to_i}")
   end
 
   def self.parse_unarmed input

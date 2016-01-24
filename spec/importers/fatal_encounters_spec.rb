@@ -8,9 +8,17 @@ describe 'FatalEncountersImporter' do
     end
 
     it 'imports CSV data correctly' do
+      test_file_import('spec/fixtures/fatal_encounters_data.csv')
+    end
+
+    it 'imports XLSX data correctly' do
+      test_file_import('spec/fixtures/fatal_encounters_data.xlsx')
+    end
+
+    def test_file_import(path)
       UniqueMpvSeq.create(:last_value => 5)
 
-      file = File.new('spec/fixtures/fatal_encounters_data.csv')
+      file = File.new(path)
       FatalEncountersImporter.import file
       expect(Incident.all.count).to eq 7
 
@@ -60,18 +68,6 @@ describe 'FatalEncountersImporter' do
 
       seventh_incident = Incident.where(:victim_name => 'Filimoni Raiyawa').first
       expect(seventh_incident.victim_race).to eq 'Asian/Pacific Islander'
-
-    end
-
-    it 'imports XLSX data correctly' do
-      file = File.new('spec/fixtures/fatal_encounters_data.xlsx')
-      FatalEncountersImporter.import file
-      expect(Incident.all.count).to eq 3
-
-      first_incident = Incident.where(:victim_name => 'Tyrone L. Holman').first
-      expect(first_incident.victim_age).to eq 37
-      expect(first_incident.victim_gender).to eq 'Male'
-      expect(first_incident.victim_race).to eq 'Unknown Race'
     end
 
     it 'handles duplicate entries by populating all data that does not already exist' do
