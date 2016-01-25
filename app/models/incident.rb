@@ -45,7 +45,7 @@ class Incident < ActiveRecord::Base
       :agency_responsible, :officers_involved, :race_of_officers_involved, :gender_of_officers_involved,
       :notes_related_to_officers_involved, :cause_of_death, :alleged_victim_crime, :crime_category, :aggregate_crime_category,
       :suspect_weapon_type, :caveat, :solution, :incident_description, :official_disposition_of_death, :criminal_charges,
-      :news_url, :mental_illness, :unarmed, :line_of_duty, :note, :in_custody, :arrest_related_death, :sort_order, :unique_identifier,
+      :news_url, :mental_illness, :unarmed, :line_of_duty, :note, :in_custody, :arrest_related_death, :needs_review, :sort_order, :unique_identifier,
       :unique_mpv, :latitude, :longitude ]
   end
 

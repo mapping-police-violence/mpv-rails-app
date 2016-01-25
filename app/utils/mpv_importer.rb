@@ -16,7 +16,7 @@ class MpvImporter < DataImporter
   end
 
   def self.expected_column_count
-    return 39
+    return 40
   end
 
   def self.import_rows(contents)
@@ -26,7 +26,7 @@ class MpvImporter < DataImporter
     entries_missing_unique_mpv = []
     contents.each_with_index do |row, index|
       next if !is_valid(row, index)
-      if row[36].nil?
+      if row[37].nil?
         entries_missing_unique_mpv.append(row)
       else
         import_row(row)
@@ -38,7 +38,7 @@ class MpvImporter < DataImporter
   end
 
   def self.import_row(row)
-    existing_incidents = Incident.where(:unique_mpv => row[36])
+    existing_incidents = Incident.where(:unique_mpv => row[37])
     if existing_incidents.empty?
       Incident.create!(incident_hash(row))
     else
@@ -87,11 +87,12 @@ class MpvImporter < DataImporter
         :note => row[31],
         :in_custody => row[32],
         :arrest_related_death => row[33],
-        :sort_order => row[34],
-        :unique_identifier => row[35],
-        :unique_mpv => row[36],
-        :latitude => row[37],
-        :longitude => row[38]
+        :needs_review => row[34],
+        :sort_order => row[35],
+        :unique_identifier => row[36],
+        :unique_mpv => row[37],
+        :latitude => row[38],
+        :longitude => row[39]
     }
   end
 end

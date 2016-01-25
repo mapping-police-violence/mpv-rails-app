@@ -41,43 +41,67 @@ end
 
 describe 'MpvImporter' do
   describe '#import' do
-    it 'imports CSV data correctly' do
-      MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
-      # if this fails and the count is 1 short, see above comment
-      expect(Incident.all.count).to eq 6
-      check_common_imported_values
+    describe 'csv import' do
+      before do
+        MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
+      end
 
-      second_incident = Incident.where(:victim_name => "Garrett Chruma").first
-      expect(second_incident.victim_age).to eq 21
-      expect(second_incident.incident_date).to eq Date.parse("6/8/2013")
+      it 'imports CSV data correctly' do
+        # if this fails and the count is 1 short, see above comment
+        expect(Incident.all.count).to eq 6
+        check_common_imported_values
+
+        second_incident = Incident.where(:victim_name => "Garrett Chruma").first
+        expect(second_incident.victim_age).to eq 21
+        expect(second_incident.incident_date).to eq Date.parse("6/8/2013")
+      end
+
+      it 'imports the needs review flag properly' do
+        expect(Incident.where(:victim_name => "Garrett Chruma").first.needs_review).to eq true
+        expect(Incident.where(:victim_name => "Binh Van Nguyen").first.needs_review).to eq false
+        expect(Incident.where(:victim_name => "Kong Nay").first.needs_review).to eq true
+
+        MpvImporter.import 'spec/fixtures/mpv_test_data_revised.csv'
+        expect(Incident.where(:victim_name => "Garrett Chruma").first.needs_review).to eq false
+      end
+
+      it 'creates new incidents for novel unique_mpvs and updates existing unique_mpvs on re-import' do
+        MpvImporter.import 'spec/fixtures/mpv_test_data_revised.csv'
+        # if this fails and the count is 1 short, see above comment
+        expect(Incident.all.count).to eq 7
+        check_common_imported_values
+
+        second_incident = Incident.where(:victim_name => "Garrett Chruma").first
+        # most data is updated to match contents of revised file
+        expect(second_incident.victim_age).to eq 24
+        expect(second_incident.incident_date).to eq Date.parse("7/8/2013")
+        # latitude and longitude are not updated to match contents of revised file
+        expect(second_incident.latitude).to eq BigDecimal.new(30.8137, 10) # blank in file
+        expect(second_incident.longitude).to eq BigDecimal.new(-88.3332, 10) # 0 in file
+        expect(Incident.where(:victim_name => 'Don White').first.unique_mpv).to eq 988
+      end
     end
 
-    it 'creates new incidents for novel unique_mpvs and updates existing unique_mpvs on re-import' do
-      MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
-      MpvImporter.import 'spec/fixtures/mpv_test_data_revised.csv'
-      # if this fails and the count is 1 short, see above comment
-      expect(Incident.all.count).to eq 7
-      check_common_imported_values
+    describe 'excel import' do
+      before do
+        MpvImporter.import 'spec/fixtures/mpv_test_data.xlsx'
+      end
 
-      second_incident = Incident.where(:victim_name => "Garrett Chruma").first
-      # most data is updated to match contents of revised file
-      expect(second_incident.victim_age).to eq 24
-      expect(second_incident.incident_date).to eq Date.parse("7/8/2013")
-      # latitude and longitude are not updated to match contents of revised file
-      expect(second_incident.latitude).to eq BigDecimal.new(30.8137, 10) # blank in file
-      expect(second_incident.longitude).to eq BigDecimal.new(-88.3332, 10) # 0 in file
-      expect(Incident.where(:victim_name => 'Don White').first.unique_mpv).to eq 988
-    end
+      it 'imports XLSX data' do
+        expect(Incident.all.count).to eq 5
 
-    it 'imports XLSX data' do
-      MpvImporter.import 'spec/fixtures/mpv_test_data.xlsx'
-      expect(Incident.all.count).to eq 5
+        expect(Incident.where(:victim_name => "Garrett Chruma").first.unique_mpv).to eq 457
+        expect(Incident.where(:victim_name => "Binh Van Nguyen").first.unique_mpv).to eq 39
+        expect(Incident.where(:victim_name => "Christopher A. Fredette").first.unique_mpv).to eq 608
+        expect(Incident.where(:victim_name => "Kong Nay").first.unique_mpv).to eq 607
+        expect(Incident.where(:victim_name => "Mohammad Abdulazeez").first.unique_mpv).to eq 609
+      end
 
-      expect(Incident.where(:victim_name => "Garrett Chruma").first.unique_mpv).to eq 457
-      expect(Incident.where(:victim_name => "Binh Van Nguyen").first.unique_mpv).to eq 39
-      expect(Incident.where(:victim_name => "Christopher A. Fredette").first.unique_mpv).to eq 608
-      expect(Incident.where(:victim_name => "Kong Nay").first.unique_mpv).to eq 607
-      expect(Incident.where(:victim_name => "Mohammad Abdulazeez").first.unique_mpv).to eq 609
+      it 'imports the needs review flag properly' do
+        expect(Incident.where(:victim_name => "Garrett Chruma").first.needs_review).to eq true
+        expect(Incident.where(:victim_name => "Binh Van Nguyen").first.needs_review).to eq false
+        expect(Incident.where(:victim_name => "Kong Nay").first.needs_review).to eq true
+      end
     end
   end
 

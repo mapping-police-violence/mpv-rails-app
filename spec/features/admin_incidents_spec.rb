@@ -21,7 +21,19 @@ describe 'the incidents page' do
       if line.include? 'Mohammad Abdulazeez'
         mohammad = Incident.where(:victim_name => 'Mohammad Abdulazeez').first
         line.sub! ',34.733616', "#{mohammad.unique_mpv},34.733616"
+        line.sub! 'Allegedly Armed,,,,,,,8178.1,', 'Allegedly Armed,,,,,true,,8178.1,'
       end
+      if line.include? 'Kong Nay'
+        line.sub! 'Line of Duty,,,,,,4027.1,', 'Line of Duty,,,,true,,4027.1,'
+      end
+      if line.include? 'Christopher A. Fredette'
+        line.sub! 'Line of Duty,,,,,,3810.1,', 'Line of Duty,,,,true,,3810.1,'
+      end
+      if line.include? 'Alan Bellew'
+        line.sub! 'Not In-Custody/Inmate,,,,7735.1,', 'Not In-Custody/Inmate,,true,,7735.1,'
+      end
+      line.sub! 'TRUE', 'true'
+      line.sub! 'FALSE', 'false'
       expect(page).to have_content line
     end
   end
