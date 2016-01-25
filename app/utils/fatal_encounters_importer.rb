@@ -25,7 +25,7 @@ class FatalEncountersImporter < DataImporter
         :incident_street_address => row[7],
         :incident_city => row[8],
         :incident_state => row[9],
-        :incident_zip => row[10].to_i,
+        :incident_zip => input_as_integer(row[10]),
         :incident_county => row[11],
         :agency_responsible => row[12],
         :cause_of_death => row[13],

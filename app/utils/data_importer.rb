@@ -3,6 +3,13 @@ require 'roo'
 
 class DataImporter
 
+  # fields that contain numeric values in XLSX files are represented internally as floats
+  # (regardless of the cell's number format), so when they are implicitly converted to string,
+  # they have a trailing decimal (e.g. 94608.0 for a zip code)
+  def self.input_as_integer(zip)
+    if zip.nil? then nil else zip.to_i end
+  end
+
   def self.contains_extension(path, ext)
     ext.in? File.extname(path)
   end

@@ -63,7 +63,7 @@ class MpvImporter < DataImporter
         :incident_city => row[7],
         :within_city_limits => row[8],
         :incident_state => row[9],
-        :incident_zip => row[10],
+        :incident_zip => input_as_integer(row[10]),
         :incident_county => row[11],
         :agency_responsible => row[12],
         :officers_involved => row[13],
