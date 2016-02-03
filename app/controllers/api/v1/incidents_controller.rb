@@ -1,7 +1,7 @@
 class Api::V1::IncidentsController < ApplicationController
 
   respond_to :json
-  # caches_action(:index)
+  caches_action(:index)
 
   def index
       excluded_fields = [:needs_review]

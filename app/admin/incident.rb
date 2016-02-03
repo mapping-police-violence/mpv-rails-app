@@ -3,16 +3,16 @@ ActiveAdmin.register Incident do
   permit_params *Incident.permitted_params
 
 
-  # after_save do
-  #   expire_action :controller => '/api/v1/incidents',
-  #                 :action => :index,
-  #                 :format => :json
-  # end
-  # after_destroy do
-  #   expire_action :controller => '/api/v1/incidents',
-  #                 :action => :index,
-  #                 :format => :json
-  # end
+  after_save do
+    expire_action :controller => '/api/v1/incidents',
+                  :action => :index,
+                  :format => :json
+  end
+  after_destroy do
+    expire_action :controller => '/api/v1/incidents',
+                  :action => :index,
+                  :format => :json
+  end
 
   controller do
     def show
