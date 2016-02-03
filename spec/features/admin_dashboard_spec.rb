@@ -78,7 +78,7 @@ describe 'the dashboard' do
   it 'has a button to go to the CSV download page' do
     click_on 'Download CSV'
     expect(page).to have_content('Download')
-    expect(page).to have_content('Entries after')
+    expect(page).to have_content('Entries created after')
   end
 
 end

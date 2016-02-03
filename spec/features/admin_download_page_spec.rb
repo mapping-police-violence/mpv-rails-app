@@ -48,7 +48,22 @@ describe 'the download page' do
       Incident.create!(:victim_name => 'Older Test Entry')
     end
 
-    fill_in 'Entries after:', :with => '2015-01-01'
+    fill_in 'Entries created after:', :with => '2015-01-01'
+    click_button 'Download'
+
+    check_header(page)
+
+    expect(page).to have_content('Current Test Entry')
+    expect(page).not_to have_content('Older Test Entry')
+  end
+
+  it ('allows users to filter entries by incident date') do
+    Incident.create!(:victim_name => 'Current Test Entry',
+                     :incident_date => Date.parse('2015-12-31'))
+    Incident.create!(:victim_name => 'Older Test Entry',
+                     :incident_date => Date.parse('2000-01-01'))
+
+    fill_in 'Incidents that occurred after:', :with => '2015-01-01'
     click_button 'Download'
 
     check_header(page)
