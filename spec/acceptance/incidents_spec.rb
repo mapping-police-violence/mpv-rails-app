@@ -11,7 +11,7 @@ resource 'Incidents' do
   end
 
   get '/api/v1/incidents' do
-    parameter :verbose, 'Set verbosity level of response. True includes all fields and false only includes lat/long and incident ID. Defaults to false'
+    parameter :verbose, 'Set verbosity level of response. True includes all fields and false only includes lat/long and incident ID. Defaults to false.'
 
     example_request 'Getting a list of incidents in summary mode' do
       expect(status).to eq(200)
