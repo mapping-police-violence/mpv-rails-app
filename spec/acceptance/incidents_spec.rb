@@ -4,19 +4,98 @@ require 'rspec_api_documentation/dsl'
 resource 'Incidents' do
   header 'Accept', 'application/json'
 
+  before do
+    MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
+    Incident.where(victim_name: 'Garrett Chruma').first.update_attribute(:needs_review, false)
+    Incident.where(victim_name: 'Alan Bellew').first.update_attribute(:needs_review, false)
+  end
+
   get '/api/v1/incidents' do
+    parameter :verbose, 'Set verbosity level of response. True includes all fields and false only includes lat/long and incident ID. Defaults to false'
 
-    before do
-      MpvImporter.import 'spec/fixtures/mpv_test_data.csv'
-      Incident.where(victim_name: 'Garrett Chruma').first.update_attribute(:needs_review, false)
-      Incident.where(victim_name: 'Alan Bellew').first.update_attribute(:needs_review, false)
-    end
-
-    example_request 'Getting a list of incidents' do
+    example_request 'Getting a list of incidents in summary mode' do
       expect(status).to eq(200)
       response_json = JSON.parse(response_body)
       expect(response_json.length).to eq 3
 
+      first_incident = Incident.where(victim_name: "Binh Van Nguyen").first
+      expect(response_json[1]["id"]).to eq first_incident.id
+      expect(response_json[1]["latitude"]).to eq "33.745989"
+      expect(response_json[1]["longitude"]).to eq "-117.93968"
+      expect(response_json[1].keys).not_to include "victim_name"
+      expect(response_json[1].keys).not_to include "victim_age"
+      expect(response_json[1].keys).not_to include "victim_gender"
+      expect(response_json[1].keys).not_to include "victim_race"
+      expect(response_json[1].keys).not_to include "victim_image_url"
+      expect(response_json[1].keys).not_to include "incident_date"
+      expect(response_json[1].keys).not_to include "incident_street_address"
+      expect(response_json[1].keys).not_to include "incident_city"
+      expect(response_json[1].keys).not_to include "incident_state"
+      expect(response_json[1].keys).not_to include "incident_zip"
+      expect(response_json[1].keys).not_to include "incident_county"
+      expect(response_json[1].keys).not_to include "agency_responsible"
+      expect(response_json[1].keys).not_to include "cause_of_death"
+      expect(response_json[1].keys).not_to include "alleged_victim_crime"
+      expect(response_json[1].keys).not_to include "crime_category"
+      expect(response_json[1].keys).not_to include "aggregate_crime_category"
+      expect(response_json[1].keys).not_to include "caveat"
+      expect(response_json[1].keys).not_to include "solution"
+      expect(response_json[1].keys).not_to include "incident_description"
+      expect(response_json[1].keys).not_to include "official_disposition_of_death"
+      expect(response_json[1].keys).not_to include "criminal_charges"
+      expect(response_json[1].keys).not_to include "news_url"
+      expect(response_json[1].keys).not_to include "mental_illness"
+      expect(response_json[1].keys).not_to include "unarmed"
+      expect(response_json[1].keys).not_to include "line_of_duty"
+      expect(response_json[1].keys).not_to include "note"
+      expect(response_json[1].keys).not_to include "in_custody"
+      expect(response_json[1].keys).not_to include "arrest_related_death"
+      expect(response_json[1].keys).not_to include "unique_mpv"
+      expect(response_json[1].keys).not_to include "needs_review"
+
+      zero_incident = Incident.where(victim_name: "Garrett Chruma").first
+      expect(response_json[0]["id"]).to eq zero_incident.id
+      expect(response_json[0]["latitude"]).to eq "30.8137"
+      expect(response_json[0]["longitude"]).to eq "-88.3332"
+      expect(response_json[0].keys).not_to include "victim_name"
+      expect(response_json[0].keys).not_to include "victim_age"
+      expect(response_json[0].keys).not_to include "victim_gender"
+      expect(response_json[0].keys).not_to include "victim_race"
+      expect(response_json[0].keys).not_to include "victim_image_url"
+      expect(response_json[0].keys).not_to include "incident_date"
+      expect(response_json[0].keys).not_to include "incident_street_address"
+      expect(response_json[0].keys).not_to include "incident_city"
+      expect(response_json[0].keys).not_to include "incident_state"
+      expect(response_json[0].keys).not_to include "incident_zip"
+      expect(response_json[0].keys).not_to include "incident_county"
+      expect(response_json[0].keys).not_to include "agency_responsible"
+      expect(response_json[0].keys).not_to include "cause_of_death"
+      expect(response_json[0].keys).not_to include "alleged_victim_crime"
+      expect(response_json[0].keys).not_to include "crime_category"
+      expect(response_json[0].keys).not_to include "aggregate_crime_category"
+      expect(response_json[0].keys).not_to include "caveat"
+      expect(response_json[0].keys).not_to include "solution"
+      expect(response_json[0].keys).not_to include "incident_description"
+      expect(response_json[0].keys).not_to include "official_disposition_of_death"
+      expect(response_json[0].keys).not_to include "criminal_charges"
+      expect(response_json[0].keys).not_to include "news_url"
+      expect(response_json[0].keys).not_to include "mental_illness"
+      expect(response_json[0].keys).not_to include "unarmed"
+      expect(response_json[0].keys).not_to include "line_of_duty"
+      expect(response_json[0].keys).not_to include "note"
+      expect(response_json[0].keys).not_to include "in_custody"
+      expect(response_json[0].keys).not_to include "arrest_related_death"
+      expect(response_json[0].keys).not_to include "unique_mpv"
+      expect(response_json[1].keys).not_to include "needs_review"
+    end
+
+    example_request 'Getting a list of incidents in verbose mode', :verbose => true do
+      expect(status).to eq(200)
+      response_json = JSON.parse(response_body)
+      expect(response_json.length).to eq 3
+
+      first_incident = Incident.where(victim_name: "Binh Van Nguyen").first
+      expect(response_json[1]["id"]).to eq first_incident.id
       expect(response_json[1]["victim_name"]).to eq "Binh Van Nguyen"
       expect(response_json[1]["victim_age"]).to eq 39
       expect(response_json[1]["victim_gender"]).to eq "Male"
@@ -46,9 +125,9 @@ resource 'Incidents' do
       expect(response_json[1]["in_custody"]).to be_nil
       expect(response_json[1]["arrest_related_death"]).to be_nil
       expect(response_json[1]["unique_mpv"]).to eq 39
+      expect(response_json[1]["latitude"]).to eq "33.745989"
+      expect(response_json[1]["longitude"]).to eq "-117.93968"
       expect(response_json[1].keys).not_to include "needs_review"
-      
-
 
       expect(response_json[0]["victim_name"]).to eq "Garrett Chruma"
       expect(response_json[0]["victim_age"]).to eq 21
@@ -79,6 +158,8 @@ resource 'Incidents' do
       expect(response_json[0]["in_custody"]).to be_nil
       expect(response_json[0]["arrest_related_death"]).to be_nil
       expect(response_json[0]["unique_mpv"]).to eq 457
+      expect(response_json[0]["latitude"]).to eq "30.8137"
+      expect(response_json[0]["longitude"]).to eq "-88.3332"
       expect(response_json[1].keys).not_to include "needs_review"
 
       expect(response_json[2]["victim_name"]).to eq "Alan Bellew"
@@ -86,9 +167,5 @@ resource 'Incidents' do
       expect(response_json[2]["suspect_weapon_type"]).to eq "Non-lethal firearm"
       expect(response_json[1].keys).not_to include "needs_review"
     end
-  end
-
-  after(:all) do
-    Incident.delete_all
   end
 end

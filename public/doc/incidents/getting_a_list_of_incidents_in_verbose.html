@@ -109,9 +109,28 @@ table th, table td {
       <h1>Incidents API</h1>
 
       <div class="article">
-        <h2>Getting a list of incidents</h2>
+        <h2>Getting a list of incidents in verbose</h2>
         <h3>GET /api/v1/incidents</h3>
 
+          <h3>Parameters</h3>
+          <table class="parameters table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                    <span class="name">verbose</span>
+                </td>
+                <td>
+                  <span class="description">Set verbosity level of response. True includes all fields and false only includes lat/long and incident ID. Defaults to false</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
 
 
           <h3>Request</h3>
@@ -122,8 +141,10 @@ Host: example.org
 Cookie: </pre>
 
           <h4>Route</h4>
-          <pre class="request route highlight">GET /api/v1/incidents</pre>
+          <pre class="request route highlight">GET /api/v1/incidents?verbose=true</pre>
 
+            <h4>Query Parameters</h4>
+            <pre class="request query_parameters highlight">verbose: true</pre>
 
 
 
@@ -133,107 +154,17 @@ Cookie: </pre>
 X-XSS-Protection: 1; mode=block
 X-Content-Type-Options: nosniff
 Content-Type: application/json; charset=utf-8
-ETag: W/&quot;78d5d7503e2fb1e8ca5066319bc16000&quot;
+ETag: W/&quot;c2f3ca9a282558c42eb8ad87affeee62&quot;
 Cache-Control: max-age=0, private, must-revalidate
-X-Request-Id: 6ee880ce-cf67-4751-85b4-0815bc8c01f3
-X-Runtime: 0.090766
-Content-Length: 7342</pre>
+X-Request-Id: ff8748f4-04e1-4a85-9973-157e93ca534f
+X-Runtime: 0.006489
+Content-Length: 4772</pre>
             <h4>Status</h4>
             <pre class="response status">200 OK</pre>
               <h4>Body</h4>
               <pre class="response body">[
   {
-    &quot;id&quot;: 240,
-    &quot;victim_name&quot;: &quot;Kong Nay&quot;,
-    &quot;victim_age&quot;: 34,
-    &quot;victim_gender&quot;: &quot;Male&quot;,
-    &quot;victim_race&quot;: &quot;Asian&quot;,
-    &quot;victim_image_url&quot;: null,
-    &quot;incident_date&quot;: &quot;2000-01-01&quot;,
-    &quot;incident_street_address&quot;: &quot;Broad River Rd &amp; Kennerly Rd&quot;,
-    &quot;incident_city&quot;: &quot;Columbia&quot;,
-    &quot;incident_state&quot;: &quot;SC&quot;,
-    &quot;incident_zip&quot;: &quot;29063&quot;,
-    &quot;incident_county&quot;: &quot;Richland&quot;,
-    &quot;agency_responsible&quot;: &quot;Richland County Sheriff&#39;s Office&quot;,
-    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
-    &quot;alleged_victim_crime&quot;: null,
-    &quot;crime_category&quot;: null,
-    &quot;aggregate_crime_category&quot;: null,
-    &quot;caveat&quot;: null,
-    &quot;solution&quot;: null,
-    &quot;incident_description&quot;: &quot;Nay tried to rob a gas station. He fled the scene and deputies caught up with him and he crashed at Broad River and Kennerly Road. He got into a standoff with officers and was shot.&quot;,
-    &quot;official_disposition_of_death&quot;: &quot;Pending investigation&quot;,
-    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
-    &quot;news_url&quot;: &quot;http://www.wltx.com/story/local/2013/07/20/1679546/&quot;,
-    &quot;mental_illness&quot;: &quot;No&quot;,
-    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
-    &quot;line_of_duty&quot;: &quot;Line of Duty&quot;,
-    &quot;note&quot;: null,
-    &quot;in_custody&quot;: null,
-    &quot;arrest_related_death&quot;: null,
-    &quot;unique_mpv&quot;: 607,
-    &quot;created_at&quot;: &quot;2015-12-14T01:34:07.688Z&quot;,
-    &quot;updated_at&quot;: &quot;2015-12-14T01:34:07.688Z&quot;,
-    &quot;latitude&quot;: &quot;34.101671&quot;,
-    &quot;longitude&quot;: &quot;-81.181117&quot;,
-    &quot;within_city_limits&quot;: null,
-    &quot;officers_involved&quot;: null,
-    &quot;race_of_officers_involved&quot;: null,
-    &quot;gender_of_officers_involved&quot;: null,
-    &quot;notes_related_to_officers_involved&quot;: null,
-    &quot;sort_order&quot;: null,
-    &quot;unique_identifier&quot;: &quot;4027.1&quot;,
-    &quot;suspect_weapon_type&quot;: null,
-    &quot;notes_related_to_officer_involved&quot;: null
-  },
-  {
-    &quot;id&quot;: 241,
-    &quot;victim_name&quot;: &quot;Mohammad Abdulazeez&quot;,
-    &quot;victim_age&quot;: 24,
-    &quot;victim_gender&quot;: &quot;Male&quot;,
-    &quot;victim_race&quot;: &quot;Asian&quot;,
-    &quot;victim_image_url&quot;: null,
-    &quot;incident_date&quot;: &quot;2013-01-01&quot;,
-    &quot;incident_street_address&quot;: &quot;4051 Amnicola Hwy&quot;,
-    &quot;incident_city&quot;: &quot;Chattanooga&quot;,
-    &quot;incident_state&quot;: &quot;TN&quot;,
-    &quot;incident_zip&quot;: null,
-    &quot;incident_county&quot;: null,
-    &quot;agency_responsible&quot;: &quot;Chattanooga Police Department&quot;,
-    &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
-    &quot;alleged_victim_crime&quot;: null,
-    &quot;crime_category&quot;: null,
-    &quot;aggregate_crime_category&quot;: null,
-    &quot;caveat&quot;: &quot;Firearm&quot;,
-    &quot;solution&quot;: null,
-    &quot;incident_description&quot;: null,
-    &quot;official_disposition_of_death&quot;: null,
-    &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
-    &quot;news_url&quot;: null,
-    &quot;mental_illness&quot;: null,
-    &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
-    &quot;line_of_duty&quot;: null,
-    &quot;note&quot;: null,
-    &quot;in_custody&quot;: null,
-    &quot;arrest_related_death&quot;: null,
-    &quot;unique_mpv&quot;: 608,
-    &quot;created_at&quot;: &quot;2015-12-14T01:34:07.696Z&quot;,
-    &quot;updated_at&quot;: &quot;2015-12-14T01:34:07.696Z&quot;,
-    &quot;latitude&quot;: &quot;34.733616&quot;,
-    &quot;longitude&quot;: &quot;-80.801105&quot;,
-    &quot;within_city_limits&quot;: null,
-    &quot;officers_involved&quot;: null,
-    &quot;race_of_officers_involved&quot;: null,
-    &quot;gender_of_officers_involved&quot;: null,
-    &quot;notes_related_to_officers_involved&quot;: null,
-    &quot;sort_order&quot;: null,
-    &quot;unique_identifier&quot;: &quot;8178.1&quot;,
-    &quot;suspect_weapon_type&quot;: null,
-    &quot;notes_related_to_officer_involved&quot;: null
-  },
-  {
-    &quot;id&quot;: 238,
+    &quot;id&quot;: 1732,
     &quot;victim_name&quot;: &quot;Garrett Chruma&quot;,
     &quot;victim_age&quot;: 21,
     &quot;victim_gender&quot;: &quot;Male&quot;,
@@ -263,8 +194,8 @@ Content-Length: 7342</pre>
     &quot;in_custody&quot;: null,
     &quot;arrest_related_death&quot;: null,
     &quot;unique_mpv&quot;: 457,
-    &quot;created_at&quot;: &quot;2015-12-14T01:34:07.670Z&quot;,
-    &quot;updated_at&quot;: &quot;2015-12-14T01:34:07.670Z&quot;,
+    &quot;created_at&quot;: &quot;2016-02-26T04:57:33.287Z&quot;,
+    &quot;updated_at&quot;: &quot;2016-02-26T04:57:33.381Z&quot;,
     &quot;latitude&quot;: &quot;30.8137&quot;,
     &quot;longitude&quot;: &quot;-88.3332&quot;,
     &quot;within_city_limits&quot;: null,
@@ -274,11 +205,10 @@ Content-Length: 7342</pre>
     &quot;notes_related_to_officers_involved&quot;: null,
     &quot;sort_order&quot;: null,
     &quot;unique_identifier&quot;: &quot;4126.1&quot;,
-    &quot;suspect_weapon_type&quot;: null,
-    &quot;notes_related_to_officer_involved&quot;: null
+    &quot;suspect_weapon_type&quot;: null
   },
   {
-    &quot;id&quot;: 237,
+    &quot;id&quot;: 1733,
     &quot;victim_name&quot;: &quot;Binh Van Nguyen&quot;,
     &quot;victim_age&quot;: 39,
     &quot;victim_gender&quot;: &quot;Male&quot;,
@@ -308,8 +238,8 @@ Content-Length: 7342</pre>
     &quot;in_custody&quot;: null,
     &quot;arrest_related_death&quot;: null,
     &quot;unique_mpv&quot;: 39,
-    &quot;created_at&quot;: &quot;2015-12-14T01:34:07.644Z&quot;,
-    &quot;updated_at&quot;: &quot;2015-12-14T01:34:07.644Z&quot;,
+    &quot;created_at&quot;: &quot;2016-02-26T04:57:33.302Z&quot;,
+    &quot;updated_at&quot;: &quot;2016-02-26T04:57:33.302Z&quot;,
     &quot;latitude&quot;: &quot;33.745989&quot;,
     &quot;longitude&quot;: &quot;-117.93968&quot;,
     &quot;within_city_limits&quot;: null,
@@ -319,53 +249,51 @@ Content-Length: 7342</pre>
     &quot;notes_related_to_officers_involved&quot;: null,
     &quot;sort_order&quot;: null,
     &quot;unique_identifier&quot;: &quot;1917.1&quot;,
-    &quot;suspect_weapon_type&quot;: null,
-    &quot;notes_related_to_officer_involved&quot;: null
+    &quot;suspect_weapon_type&quot;: null
   },
   {
-    &quot;id&quot;: 239,
-    &quot;victim_name&quot;: &quot;Christopher A. Fredette&quot;,
-    &quot;victim_age&quot;: 32,
+    &quot;id&quot;: 1736,
+    &quot;victim_name&quot;: &quot;Alan Bellew&quot;,
+    &quot;victim_age&quot;: 29,
     &quot;victim_gender&quot;: &quot;Male&quot;,
-    &quot;victim_race&quot;: &quot;Asian&quot;,
-    &quot;victim_image_url&quot;: &quot;http://ak-cache.legacy.net/legacy/images/Cobrands/SanAntonio/Photos/2453076_245307620130704.jpg&quot;,
-    &quot;incident_date&quot;: null,
-    &quot;incident_street_address&quot;: &quot;5100 block Galahad Drive&quot;,
-    &quot;incident_city&quot;: &quot;San Antonio&quot;,
-    &quot;incident_state&quot;: &quot;TX&quot;,
-    &quot;incident_zip&quot;: &quot;78218&quot;,
-    &quot;incident_county&quot;: &quot;Bexar&quot;,
-    &quot;agency_responsible&quot;: &quot;San Antonio Police Department&quot;,
+    &quot;victim_race&quot;: &quot;White&quot;,
+    &quot;victim_image_url&quot;: &quot;http://www.portlandmercury.com/images/blogimages/2015/06/29/1435620050-screen_shot_2015-06-29_at_4.20.07_pm.png&quot;,
+    &quot;incident_date&quot;: &quot;2015-06-28&quot;,
+    &quot;incident_street_address&quot;: &quot;1900 NE 122nd Ave&quot;,
+    &quot;incident_city&quot;: &quot;Portland&quot;,
+    &quot;incident_state&quot;: &quot;OR&quot;,
+    &quot;incident_zip&quot;: &quot;97230&quot;,
+    &quot;incident_county&quot;: &quot;Multnomah&quot;,
+    &quot;agency_responsible&quot;: &quot;Portland Police Department&quot;,
     &quot;cause_of_death&quot;: &quot;Gunshot&quot;,
     &quot;alleged_victim_crime&quot;: null,
     &quot;crime_category&quot;: null,
     &quot;aggregate_crime_category&quot;: null,
     &quot;caveat&quot;: null,
     &quot;solution&quot;: null,
-    &quot;incident_description&quot;: &quot;Officers called to the scene for a family disturbance, suspect was being aggressive towards his parents. Taken into yard by two officers, as they searched him, he pulls gun, fires it. Officer inside house ran out and fired.&quot;,
-    &quot;official_disposition_of_death&quot;: &quot;Justified&quot;,
+    &quot;incident_description&quot;: &quot;Police responding to reports of a fight near a supermarket stopped and questioned Bellew in his car, along with two other passengers. Officers fatally shot the 29-year-old after he pulled a starter gun out of the car and pointed it at officers.&quot;,
+    &quot;official_disposition_of_death&quot;: &quot;Pending investigation&quot;,
     &quot;criminal_charges&quot;: &quot;No Known Charges&quot;,
-    &quot;news_url&quot;: &quot;http://www.kens5.com/story/news/local/2014/06/26/10480200/&quot;,
-    &quot;mental_illness&quot;: &quot;Unknown&quot;,
+    &quot;news_url&quot;: &quot;http://www.kgw.com/story/news/local/2015/06/29/police-shooting-winco-parking-lot-portland/29455487/&quot;,
+    &quot;mental_illness&quot;: &quot;Drug or alcohol use&quot;,
     &quot;unarmed&quot;: &quot;Allegedly Armed&quot;,
     &quot;line_of_duty&quot;: &quot;Line of Duty&quot;,
     &quot;note&quot;: null,
-    &quot;in_custody&quot;: null,
+    &quot;in_custody&quot;: &quot;Not In-Custody/Inmate&quot;,
     &quot;arrest_related_death&quot;: null,
-    &quot;unique_mpv&quot;: 535,
-    &quot;created_at&quot;: &quot;2015-12-14T01:34:07.679Z&quot;,
-    &quot;updated_at&quot;: &quot;2015-12-14T01:34:07.679Z&quot;,
-    &quot;latitude&quot;: &quot;29.50335&quot;,
-    &quot;longitude&quot;: &quot;-98.389034&quot;,
+    &quot;unique_mpv&quot;: 605,
+    &quot;created_at&quot;: &quot;2016-02-26T04:57:33.355Z&quot;,
+    &quot;updated_at&quot;: &quot;2016-02-26T04:57:33.390Z&quot;,
+    &quot;latitude&quot;: &quot;30.8137&quot;,
+    &quot;longitude&quot;: &quot;-88.3332&quot;,
     &quot;within_city_limits&quot;: null,
-    &quot;officers_involved&quot;: null,
+    &quot;officers_involved&quot;: &quot;Dominic Lovato; Michael Currier&quot;,
     &quot;race_of_officers_involved&quot;: null,
     &quot;gender_of_officers_involved&quot;: null,
     &quot;notes_related_to_officers_involved&quot;: null,
     &quot;sort_order&quot;: null,
-    &quot;unique_identifier&quot;: &quot;3810.1&quot;,
-    &quot;suspect_weapon_type&quot;: null,
-    &quot;notes_related_to_officer_involved&quot;: null
+    &quot;unique_identifier&quot;: &quot;7735.1&quot;,
+    &quot;suspect_weapon_type&quot;: &quot;Non-lethal firearm&quot;
   }
 ]</pre>
       </div>
